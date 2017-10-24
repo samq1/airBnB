@@ -3,10 +3,14 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import CreateView
 from django.db import models
 import re
+from django import forms
+from django.utils.translation import ugettext_lazy as _
 import bcrypt
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9\.\+_-]+@[a-zA-Z0-9\._-]+\.[a-zA-Z]*$')
 NAME_REGEX = re.compile(r'^[A-Za-z]\w+$')
+NUMBER_REGEX = re.compile(r'^(\+\d{1,3}[- ]?)?\d{10}$')
+ZIPCODE_REGEX = re.compile(r'^\d{5}(?:[-\s]\d{4})?$')
 
 # Create your models here.
 class UserManager(models.Manager):
@@ -36,11 +40,32 @@ class UserManager(models.Manager):
         if len(postData['password']) < 4:
             errors.append("password must be at least 4 characters")
         #  -----------------------------------           
+        if len(postData['address']) < 3:
+            errors.append("invalid address")
+        #  ----------------------------------- 
+        if len(postData['city']) < 1:
+            errors.append("invalid city")
+        #  ----------------------------------- 
+        if len(postData['state']) < 1:
+            errors.append("invalid state")
+        #  ----------------------------------- 
+        if len(postData['zipcode']) < 1:
+            errors.append("invalid state")
+        #  -----------------------------------
+        if len(postData['country']) < 1:
+            errors.append("invalid country")
+        #  -----------------------------------           
         if not re.match(NAME_REGEX, postData['first_name']) or not re.match(NAME_REGEX, postData['last_name']):
             errors.append('name fields must be letter characters only')
         #  -----------------------------------
         if not re.match(EMAIL_REGEX, postData['email']):
             errors.append("invalid email")
+        #  -----------------------------------
+        if not re.match(NUMBER_REGEX, postData['phone_number']):
+            errors.append("invalid phone number")
+        #  -----------------------------------
+        if not re.match(ZIPCODE_REGEX, postData['zipcode']):
+            errors.append("invalid zipcode")
         #  -----------------------------------
         if len(User.objects.filter(email=postData['email'])) > 0:
             errors.append("email already in use")
@@ -67,7 +92,7 @@ class UserManager(models.Manager):
                 zipcode=postData['zipcode'],
                 country=postData['country'],
                 bday=postData['bday'],
-                email=postData['enail'],
+                email=postData['email'],
                 bio=postData['bio'],
                 school=postData['school'],
                 work=postData['work'],
@@ -76,7 +101,6 @@ class UserManager(models.Manager):
             return new_user
 
         return errors
-
 
 class User(models.Model):
     username = models.CharField(max_length=30)
@@ -101,146 +125,147 @@ class User(models.Model):
     def __repr__(self):
         return "<User object: {} {} {} {} {}>".format(self.id, self.email, self.password, self.created_at, self.updated_at)
 
+LANGUAGE_CHOICES = (
+    ('ab', 'Abkhaz'),
+    ('ady', 'Adyghe'),
+    ('af', 'Afrikaans'),
+    ('ak', 'Akan'),
+    ('sq', 'Albanian'),
+    ('ase', 'American Sign Language'),
+    ('am', 'Amharic'),
+    ('grc', 'Ancient Greek'),
+    ('ar', 'Arabic'),
+    ('an', 'Aragonese'),
+    ('arc', 'Aramaic'),
+    ('hy', 'Armenian'),
+    ('ay', 'Aymara'),
+    ('ban', 'Balinese'),
+    ('eu', 'Basque'),
+    ('bew', 'Betawi'),
+    ('sh', 'Bosnian'),
+    ('br', 'Breton'),
+    ('bg', 'Bulgarian'),
+    ('yue', 'Cantonese'),
+    ('ca', 'Catalan'),
+    ('chr', 'Cherokee'),
+    ('clc', 'Chickasaw'),
+    ('zh', 'Chinese'),
+    ('cop', 'Coptic'),
+    ('kw', 'Cornish'),
+    ('co', 'Corsican'),
+    ('crh', 'Crimean Tatar'),
+    ('sh', 'Croatian'),
+    ('cs', 'Czech'),
+    ('da', 'Danish'),
+    ('dwr', 'Dawro'),
+    ('nl', 'Dutch'),
+    ('en', 'English'),
+    ('eo', 'Esperanto'),
+    ('et', 'Estonian'),
+    ('ee', 'Ewe'),
+    ('hif', 'Fiji Hindi'),
+    ('fil', 'Filipino'),
+    ('fi', 'Finnish'),
+    ('fr', 'French'),
+    ('gl', 'Galician'),
+    ('ka', 'Georgian'),
+    ('de', 'German'),
+    ('el', 'Greek, Modern'),
+    ('kl', 'Greenlandic'),
+    ('ht', 'Haitian Creole'),
+    ('haw', 'Hawaiian'),
+    ('he', 'Hebrew'),
+    ('hi', 'Hindi'),
+    ('hu', 'Hungarian'),
+    ('isc', 'Icelandic'),
+    ('id', 'Indonesian'),
+    ('ia', 'Interlingua'),
+    ('iu', 'Inuktitut'),
+    ('ga', 'Irish'),
+    ('it', 'Italian'),
+    ('ja', 'Japanese'),
+    ('jv', 'Javanese'),
+    ('kbd', 'Kabardian'),
+    ('kls', 'Kalasha'),
+    ('kn', 'Kannada'),
+    ('csb', 'Kashubian'),
+    ('km', 'Khmer'),
+    ('rw', 'Kinyarwanda'),
+    ('ko', 'Korean'),
+    ('ku', 'Kurdish'),
+    ('lld', 'Ladin'),
+    ('ltg', 'Latgalian'),
+    ('la', 'Latin'),
+    ('ln', 'Lingala'),
+    ('liv', 'Livonian'),
+    ('jbo', 'Lojban'),
+    ('dsb', 'Lower Sorbian'),
+    ('mk', 'Macedonian'),
+    ('ms', 'Malay'),
+    ('ml', 'Malayalam'),
+    ('cmn', 'Mandarin'),
+    ('gv', 'Manx'),
+    ('mi', 'Maori'),
+    ('mfe', 'Mauritian Creole'),
+    ('gml', 'Middle Low German'),
+    ('nan', 'Min Nan'),
+    ('mn', 'Mongolian'),
+    ('no', 'Norwegian'),
+    ('xcl', 'Old Armenian'),
+    ('ang', 'Old English'),
+    ('fro', 'Old French'),
+    ('kaw', 'Old Javanese'),
+    ('non', 'Old Norse'),
+    ('prg', 'Old Prussian'),
+    ('ory', 'Oriya'),
+    ('pag', 'Pangasinan'),
+    ('pap', 'Papiamentu'),
+    ('ps', 'Pashto'),
+    ('fa', 'Persian'),
+    ('pjt', 'Pitjantjatjara'),
+    ('pl', 'Polish'),
+    ('pt', 'Portuguese'),
+    ('qya', 'Quenya'),
+    ('rap', 'Rapa Nui'),
+    ('ro', 'Romanian'),
+    ('ru', 'Russian'),
+    ('sa', 'Sanskrit'),
+    ('sco', 'Scots'),
+    ('gd', 'Scottish Gaelic'),
+    ('sh', 'Serbian'),
+    ('sh', 'Serbo-Croatian'),
+    ('si', 'Sinhalese'),
+    ('sk', 'Slovak'),
+    ('sl', 'Slovene'),
+    ('es', 'Spanish'),
+    ('sw', 'Swahili'),
+    ('sv', 'Swedish'),
+    ('tl', 'Tagalog'),
+    ('tg', 'Tajik'),
+    ('ta', 'Tamil'),
+    ('roa-tar', 'Tarantino'),
+    ('te', 'Telugu'),
+    ('th', 'Thai'),
+    ('tpi', 'Tok Pisin'),
+    ('tr', 'Turkish'),
+    ('ak', 'Twi'),
+    ('uk', 'Ukrainian'),
+    ('hsb', 'Upper Sorbian'),
+    ('ur', 'Urdu'),
+    ('uz', 'Uzbek'),
+    ('vec', 'Venetian'),
+    ('vi', 'Vietnamese'),
+    ('wym', 'Vilamovian'),
+    ('vo', 'Volapuk'),
+    ('vro', 'Voro'),
+    ('cy', 'Welsh'),
+    ('xh', 'Xhosa'),
+    ('yi', 'Yiddish'),
+    ('zza', 'Zazaki'),
+)
 
 class Language(models.Model):
-    LANGUAGE_CHOICES = (
-        ('ab', 'Abkhaz'),
-        ('ady', 'Adyghe'),
-        ('af', 'Afrikaans'),
-        ('ak', 'Akan'),
-        ('sq', 'Albanian'),
-        ('ase', 'American Sign Language'),
-        ('am', 'Amharic'),
-        ('grc', 'Ancient Greek'),
-        ('ar', 'Arabic'),
-        ('an', 'Aragonese'),
-        ('arc', 'Aramaic'),
-        ('hy', 'Armenian'),
-        ('ay', 'Aymara'),
-        ('ban', 'Balinese'),
-        ('eu', 'Basque'),
-        ('bew', 'Betawi'),
-        ('sh', 'Bosnian'),
-        ('br', 'Breton'),
-        ('bg', 'Bulgarian'),
-        ('yue', 'Cantonese'),
-        ('ca', 'Catalan'),
-        ('chr', 'Cherokee'),
-        ('clc', 'Chickasaw'),
-        ('zh', 'Chinese'),
-        ('cop', 'Coptic'),
-        ('kw', 'Cornish'),
-        ('co', 'Corsican'),
-        ('crh', 'Crimean Tatar'),
-        ('sh', 'Croatian'),
-        ('cs', 'Czech'),
-        ('da', 'Danish'),
-        ('dwr', 'Dawro'),
-        ('nl', 'Dutch'),
-        ('en', 'English'),
-        ('eo', 'Esperanto'),
-        ('et', 'Estonian'),
-        ('ee', 'Ewe'),
-        ('hif', 'Fiji Hindi'),
-        ('fil', 'Filipino'),
-        ('fi', 'Finnish'),
-        ('fr', 'French'),
-        ('gl', 'Galician'),
-        ('ka', 'Georgian'),
-        ('de', 'German'),
-        ('el', 'Greek, Modern'),
-        ('kl', 'Greenlandic'),
-        ('ht', 'Haitian Creole'),
-        ('haw', 'Hawaiian'),
-        ('he', 'Hebrew'),
-        ('hi', 'Hindi'),
-        ('hu', 'Hungarian'),
-        ('isc', 'Icelandic'),
-        ('id', 'Indonesian'),
-        ('ia', 'Interlingua'),
-        ('iu', 'Inuktitut'),
-        ('ga', 'Irish'),
-        ('it', 'Italian'),
-        ('ja', 'Japanese'),
-        ('jv', 'Javanese'),
-        ('kbd', 'Kabardian'),
-        ('kls', 'Kalasha'),
-        ('kn', 'Kannada'),
-        ('csb', 'Kashubian'),
-        ('km', 'Khmer'),
-        ('rw', 'Kinyarwanda'),
-        ('ko', 'Korean'),
-        ('ku', 'Kurdish'),
-        ('lld', 'Ladin'),
-        ('ltg', 'Latgalian'),
-        ('la', 'Latin'),
-        ('ln', 'Lingala'),
-        ('liv', 'Livonian'),
-        ('jbo', 'Lojban'),
-        ('dsb', 'Lower Sorbian'),
-        ('mk', 'Macedonian'),
-        ('ms', 'Malay'),
-        ('ml', 'Malayalam'),
-        ('cmn', 'Mandarin'),
-        ('gv', 'Manx'),
-        ('mi', 'Maori'),
-        ('mfe', 'Mauritian Creole'),
-        ('gml', 'Middle Low German'),
-        ('nan', 'Min Nan'),
-        ('mn', 'Mongolian'),
-        ('no', 'Norwegian'),
-        ('xcl', 'Old Armenian'),
-        ('ang', 'Old English'),
-        ('fro', 'Old French'),
-        ('kaw', 'Old Javanese'),
-        ('non', 'Old Norse'),
-        ('prg', 'Old Prussian'),
-        ('ory', 'Oriya'),
-        ('pag', 'Pangasinan'),
-        ('pap', 'Papiamentu'),
-        ('ps', 'Pashto'),
-        ('fa', 'Persian'),
-        ('pjt', 'Pitjantjatjara'),
-        ('pl', 'Polish'),
-        ('pt', 'Portuguese'),
-        ('qya', 'Quenya'),
-        ('rap', 'Rapa Nui'),
-        ('ro', 'Romanian'),
-        ('ru', 'Russian'),
-        ('sa', 'Sanskrit'),
-        ('sco', 'Scots'),
-        ('gd', 'Scottish Gaelic'),
-        ('sh', 'Serbian'),
-        ('sh', 'Serbo-Croatian'),
-        ('si', 'Sinhalese'),
-        ('sk', 'Slovak'),
-        ('sl', 'Slovene'),
-        ('es', 'Spanish'),
-        ('sw', 'Swahili'),
-        ('sv', 'Swedish'),
-        ('tl', 'Tagalog'),
-        ('tg', 'Tajik'),
-        ('ta', 'Tamil'),
-        ('roa-tar', 'Tarantino'),
-        ('te', 'Telugu'),
-        ('th', 'Thai'),
-        ('tpi', 'Tok Pisin'),
-        ('tr', 'Turkish'),
-        ('ak', 'Twi'),
-        ('uk', 'Ukrainian'),
-        ('hsb', 'Upper Sorbian'),
-        ('ur', 'Urdu'),
-        ('uz', 'Uzbek'),
-        ('vec', 'Venetian'),
-        ('vi', 'Vietnamese'),
-        ('wym', 'Vilamovian'),
-        ('vo', 'Volapuk'),
-        ('vro', 'Voro'),
-        ('cy', 'Welsh'),
-        ('xh', 'Xhosa'),
-        ('yi', 'Yiddish'),
-        ('zza', 'Zazaki'),
-    )
+    choices = LANGUAGE_CHOICES
     language = models.CharField(
         max_length=30,
         choices=LANGUAGE_CHOICES,
@@ -251,7 +276,7 @@ class Language(models.Model):
 
     def __repr__(self):
         return "<User object: {}>".format(self.language)
-
+    
 class Place(models.Model):
     host = models.ForeignKey(User, related_name="host_places")
     name = models.CharField(max_length=50)
@@ -275,7 +300,6 @@ class Place(models.Model):
     is_familty_amenities_high_chair = models.BooleanField(default=False)
     is_familty_amenities_game_console = models.BooleanField(default=False)
     is_familty_amenities_stair_gates = models.BooleanField(default=False)
-    is_amenities_free_parking = models.BooleanField(default=False)
     is_amenities_pool = models.BooleanField(default=False)
     is_amenities_pets_allowed = models.BooleanField(default=False)
     is_amenities_breakfast = models.BooleanField(default=False)
