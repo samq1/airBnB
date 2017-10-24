@@ -26,8 +26,11 @@ class UserManager(models.Manager):
 
     def register_valid(self, postData):
         errors = []
+         # -----------------------------------
+        if len(postData['username']) < 3:
+            errors.append("username fields must be at least 3 characters")
         # -----------------------------------
-        if len(postData['first_name']) < 2 or len(postData['last_name']) < 2:
+        if len(postData['first_name']) < 3 or len(postData['last_name']) < 3:
             errors.append("name fields must be at least 3 characters")
         #  -----------------------------------
         if len(postData['password']) < 4:
@@ -44,22 +47,35 @@ class UserManager(models.Manager):
         #  -----------------------------------
         if postData['password'] != postData['confirm_password']:
             errors.append("passwords do not match")
+        #  -----------------------------------
+        if postData['password'] != postData['confirm_password']:
+            errors.append("passwords do not match")
+
 
         if not errors:
             # hash password
             hashed = bcrypt.hashpw((postData['password'].encode()), bcrypt.gensalt(5))
 
             new_user = self.create(
+                username=postData['username'],
                 first_name=postData['first_name'],
                 last_name=postData['last_name'],
-                email=postData['email'],
-                password=hashed,
-                bday=postData['bday']
+                phone_number=postData['phone_number'],
+                address=postData['address'],
+                city=postData['city'],
+                state=postData['state'],
+                zipcode=postData['zipcode'],
+                country=postData['country'],
+                bday=postData['bday'],
+                email=postData['enail'],
+                bio=postData['bio'],
+                school=postData['school'],
+                work=postData['work'],
+                password=postData['password'],
             )
             return new_user
 
         return errors
-
 
 
 class User(models.Model):
@@ -290,7 +306,12 @@ class Place(models.Model):
 
 class Review_Place(models.Model):
     review_place = models.ForeignKey(Place, related_name="place_reviews")
+<<<<<<< HEAD
     reviewer = models.ForeignKey(User, related_name="place_reviews_from_user")
+=======
+    reviewer = models.ForeignKey(User, related_name="reviews_from_user")
+
+>>>>>>> e344afca5d3dd167a8fd14394c09b9a4dbfe63cc
     CLEANLINESS_CHOICES = (
         ("very_clean", 'My grandmother would be proud!'),
         ("clean", 'My roommate would tolerate it!'),
@@ -302,10 +323,10 @@ class Review_Place(models.Model):
         choices=CLEANLINESS_CHOICES,
     )
     RATING_CHOICES = (
-        (1,'1 STAR'),
-        (2,'2 STARS'),
-        (3,'3 STARS'),
-        (4,'4 STARS'),
+        ('1','1 STAR'),
+        ('2','2 STARS'),
+        ('3','3 STARS'),
+        ('4','4 STARS'),
 
     )
     rating = models.IntegerField(
@@ -317,7 +338,11 @@ class Review_Place(models.Model):
 
 class Review_User(models.Model):
     user_being_reviewed = models.ForeignKey(User, related_name="user_review")
+<<<<<<< HEAD
     reviewer = models.ForeignKey(User, related_name="user_reviews_from_user")
+=======
+    reviewer = models.ForeignKey(User, related_name="list_review")
+>>>>>>> e344afca5d3dd167a8fd14394c09b9a4dbfe63cc
     comment = models.CharField(max_length=255)
     is_recommend = models.BooleanField()
     is_host = models.BooleanField(default=True)
