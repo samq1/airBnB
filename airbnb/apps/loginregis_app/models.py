@@ -112,7 +112,7 @@ class User(models.Model):
     state = models.CharField(max_length=50)
     zipcode = models.CharField(max_length=50)
     country = models.CharField(max_length=50)
-    bday = models.DateField()
+    bday = models.DateField('%m-%d-%Y')
     email = models.EmailField()
     bio = models.TextField(max_length=500)
     school = models.CharField(max_length=30, blank=True)

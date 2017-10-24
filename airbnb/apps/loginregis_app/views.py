@@ -8,13 +8,18 @@ from django.urls import reverse
 import json
 
 def index(request):
-    print ('YOURE AT THE LOGIN PAGE!')
+    print ('YOURE AT THE REGISTER PAGE!')
     
     context = {
         'Languages': Language.choices
     }
 
     return render(request, 'loginregis_app/index.html', context)
+
+def main_login(request):
+    print ('YOURE AT THE LOGIN PAGE!')
+
+    return render(request, 'loginregis_app/main_login.html')
 
 def register(request):
     result = User.objects.register_valid(request.POST)
