@@ -19,14 +19,10 @@ def register(request):
         return redirect('/')
     request.session['user_id'] = result.id
     messages.success(request, "Successfully registered!")
-
-    #messages must be imprted
     
     return redirect("/success")
-    #reverse('users:success')
 
 def success(request):
-    # messages.success(request, "Successfully registered!")
 
     context = {
         'user': User.objects.get(id=request.session['user_id'])
