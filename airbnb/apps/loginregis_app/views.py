@@ -7,7 +7,7 @@ from datetime import date
 import json
 
 def index(request):
-
+    print ('YOURE AT THE LOGIN PAGE!')
     return render(request, 'loginregis_app/index.html')
 
 def register(request):
