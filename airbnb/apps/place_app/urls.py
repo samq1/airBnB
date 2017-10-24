@@ -3,5 +3,5 @@ from django.contrib import admin
 from . import views #'.' means the same folder
 
 urlpatterns = [
-
+    url(r'^show', views.show_place),
 ]
