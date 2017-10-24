@@ -31,8 +31,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'apps.airbnb_app',
     'apps.loginregis_app',
+    'apps.main_router',
+    'apps.airbnb_app',
+    'apps.booking_app',
+    'apps.messaging_app',
+    'apps.place_app',
+    'apps.review_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

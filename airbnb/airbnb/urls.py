@@ -18,7 +18,9 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('apps.airbnb_app.urls')),
     url(r'^login/', include('apps.loginregis_app.urls')),
+    url(r'^base_check/', include('apps.main_router.urls')),
+    url(r'^', include('apps.airbnb_app.urls')),
+
     
 ]
