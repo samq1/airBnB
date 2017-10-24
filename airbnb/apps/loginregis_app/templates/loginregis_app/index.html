@@ -1,164 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
-    
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-        crossorigin="anonymous">
-    
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
-
-    <!-- Website Font style -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-    
-    <!-- Google Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
-
-    <title>Document</title>
-     {% load static %}
-    <!-- The line above tells Django to be ready to listen for static files -->
-    <link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css">
-</head>
-<body>
-    <div class="container">
-        <!-- <div class="col">
-            <p>Email</p>
-            <p>First Name</p>
-            <p>Last Name</p>
-            <p>Birthday</p>
-            <p>Password</p>
-            <p>Confirm Password</p>
-        </div> -->
-        <div class="main-login main-center">
-            		    <form class="form-horizontal" method="post" action="{% url 'register' %}">
-                                 {% csrf_token %}
-						<div class="form-group">
-							<label for="first_name" class="cols-sm-2 control-label">Your First Name</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="first_name" id="first_name"  placeholder="Enter your Name"/>
-								</div>
-							</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="last_name" class="cols-sm-2 control-label">Your Last Name</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-user fa" aria-hidden="true"></i>
-                                    </span>
-                                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter your Name" />
-                                </div>
-                            </div>
-                        </div>
-
-						<div class="form-group">
-							<label for="email" class="cols-sm-2 control-label">Your Email</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="username" class="cols-sm-2 control-label">Username</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="username" id="username"  placeholder="Enter your Username"/>
-								</div>
-							</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="username" class="cols-sm-2 control-label">Username</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-users fa" aria-hidden="true"></i>
-                                    </span>
-                                    <input type="text" class="form-control" name="username" id="username" placeholder="Enter your Username" />
-                                </div>
-                            </div>
-                        </div>
-
-						<div class="form-group">
-							<label for="password" class="cols-sm-2 control-label">Password</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="confirm_password" id="confirm_password"  placeholder="Confirm your Password"/>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group ">
-							<button type="button" class="btn btn-primary btn-lg btn-block login-button">Register</button>
-						</div>
-						<div class="login-register">
-				            <a href="index.php">Login</a>
-				         </div>
-					</form>
-				</div>
-			</div>
-
-
-            <form action="{% url 'register' %}", method='POST'>
-                
-                <p>Email:</p><input type="text" name="email"><br>
-                <p>First Name:</p><input type="text" name="first_name"><br>
-                <p>Last Name:</p><input type="text" name="last_name"><br>
-                <p>Birthday:</p><input type="date" name="bday"><br>
-                <p>Password:</p><input type="password" name="password"><Br>
-                <p>Confirm Password:</p><input type="password" name="confirm_password"><br>
-                <input type="submit" value="Register">
-            </form>
-        </div>
-        <br><br><br>
-        <div class="col-lg-9">
-            <form action="{% url 'process' %}", method='POST'>
-                {% csrf_token %}
-                <p>Email</p><input type="text" name="email"><br>
-                <p>Password</p><input type="password" name="password"><br>
-                <input type="submit" value="Log In">
-            </form>    
-            
-            
-             {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>
-                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %} {{ message }}
-                    </li>
-                    {% endfor %}
-            </ul>
-            {% endif %}
-        </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+            crossorigin="anonymous">
         
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+            crossorigin="anonymous">
+        
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
 
+        <!-- Website Font style -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+        
+        <!-- Google Fonts -->
+        <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+
+        <title>Document</title>
+        {% load static %}
+        <!-- The line above tells Django to be ready to listen for static files -->
+        <link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css">
+    </head>
+<body>
+
+    {% if messages %}
+    <ul class="messages">
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %} {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div class="container">
+
+        <div class="main-login main-center">
+            <!-- Start of the form -->
+            <form class="form-horizontal" method="post" action='{% url 'login:register' %}'>
+            {% csrf_token %}
+            <div class="form-group">
+            <label for="first_name" class="cols-sm-2 control-label">Your First Name</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                        <input type="text" class="form-control" name="first_name" id="first_name"  placeholder="Enter your Name"/>
+                    </div>  
+                </div>
+            </div>
+      
+            <div class="form-group">
+                <label for="last_name" class="cols-sm-2 control-label">Your Last Name</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-user fa" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter your Name" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="cols-sm-2 control-label">Your Email</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                        <input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="username" class="cols-sm-2 control-label">Username</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                        <input type="text" class="form-control" name="username" id="username"  placeholder="Enter your Username"/>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="username" class="cols-sm-2 control-label">Phone Number</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-users fa" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" class="form-control" name="phone_number" id="phone_number" placeholder="Enter your Phone Number" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="username" class="cols-sm-2 control-label">Address</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-users fa" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" class="form-control" name="address" id="adress" placeholder="Enter your Address" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="city" class="cols-sm-2 control-label">City</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-users fa" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" class="form-control" name="city" id="city" placeholder="Enter your City" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="state" class="cols-sm-2 control-label">State</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-users fa" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" class="form-control" name="state" id="state" placeholder="Enter your State" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="zipcode" class="cols-sm-2 control-label">Zipcode</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-users fa" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" class="form-control" name="zipcode" id="zipcode" placeholder="Enter your Zipcode" />
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="country" class="cols-sm-2 control-label">Country</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-users fa" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" class="form-control" name="country" id="country" placeholder="Enter your Country" />
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="birthday" class="cols-sm-2 control-label">Birthday</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-users fa" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" class="form-control" name="bday" id="bday" placeholder="Enter your Birthday" />
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="school" class="cols-sm-2 control-label">School</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-users fa" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" class="form-control" name="school" id="school" placeholder="Enter your School" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="work" class="cols-sm-2 control-label">Work</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-users fa" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" class="form-control" name="work" id="work" placeholder="Enter your School" />
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="work" class="cols-sm-2 control-label">Language</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-users fa" aria-hidden="true"></i>
+                        </span>
+                        <select style="width:240px">
+                            {% for choice in list1.VIEWS %}
+                            <option>{{choice}}</option>
+                            {{choice}} {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="password" class="cols-sm-2 control-label">Password</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                        <input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                        <input type="password" class="form-control" name="confirm_password" id="confirm_password"  placeholder="Confirm your Password"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group ">
+                <input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="Register">
+                <!-- <button type="button" class="btn btn-primary btn-lg btn-block login-button">Register</button> -->
+            </div>
+            <!-- LOG IN BUTTON -->
+            <div class="login-register">
+                <a href="index.php">Login</a>
+            </div>
+            <!-- End of the form -->
+        </form>
     </div>
+</div>
+
+
+                
 </body>
 </html>
