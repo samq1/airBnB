@@ -16,8 +16,8 @@ ZIPCODE_REGEX = re.compile(r'^\d{5}(?:[-\s]\d{4})?$')
 class UserManager(models.Manager):
     def login_validator(self,postData):
         errors = []
-        if len(self.filter(email=postData['email'])) > 0:
-            user = self.filter(email=postData['email'])[0]
+        if len(self.filter(username=postData['username'])) > 0:
+            user = self.filter(username=postData['username'])[0]
             if not bcrypt.checkpw(postData['password'].encode(), user.password.encode()):
                  errors.append ("Invalid password")
         else: 
@@ -96,7 +96,7 @@ class UserManager(models.Manager):
                 bio=postData['bio'],
                 school=postData['school'],
                 work=postData['work'],
-                password=postData['password'],
+                password=hashed,
             )
             return new_user
 
