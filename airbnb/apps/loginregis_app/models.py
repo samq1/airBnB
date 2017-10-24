@@ -306,12 +306,7 @@ class Place(models.Model):
 
 class Review_Place(models.Model):
     review_place = models.ForeignKey(Place, related_name="place_reviews")
-<<<<<<< HEAD
     reviewer = models.ForeignKey(User, related_name="place_reviews_from_user")
-=======
-    reviewer = models.ForeignKey(User, related_name="reviews_from_user")
-
->>>>>>> e344afca5d3dd167a8fd14394c09b9a4dbfe63cc
     CLEANLINESS_CHOICES = (
         ("very_clean", 'My grandmother would be proud!'),
         ("clean", 'My roommate would tolerate it!'),
@@ -338,11 +333,7 @@ class Review_Place(models.Model):
 
 class Review_User(models.Model):
     user_being_reviewed = models.ForeignKey(User, related_name="user_review")
-<<<<<<< HEAD
     reviewer = models.ForeignKey(User, related_name="user_reviews_from_user")
-=======
-    reviewer = models.ForeignKey(User, related_name="list_review")
->>>>>>> e344afca5d3dd167a8fd14394c09b9a4dbfe63cc
     comment = models.CharField(max_length=255)
     is_recommend = models.BooleanField()
     is_host = models.BooleanField(default=True)
