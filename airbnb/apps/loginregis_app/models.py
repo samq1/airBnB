@@ -338,11 +338,7 @@ class Review_Place(models.Model):
 
 class Review_User(models.Model):
     user_being_reviewed = models.ForeignKey(User, related_name="user_review")
-<<<<<<< HEAD
-    reviewer = models.ForeignKey(User, related_name="list_review")
-=======
     reviewer = models.ForeignKey(User, related_name="user_reviews_from_user")
->>>>>>> upstream/master
     comment = models.CharField(max_length=255)
     is_recommend = models.BooleanField()
     is_host = models.BooleanField(default=True)
