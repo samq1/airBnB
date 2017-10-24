@@ -307,6 +307,10 @@ class Place(models.Model):
 class Review_Place(models.Model):
     review_place = models.ForeignKey(Place, related_name="place_reviews")
     reviewer = models.ForeignKey(User, related_name="place_reviews_from_user")
+<<<<<<< HEAD
+
+=======
+>>>>>>> upstream/master
     CLEANLINESS_CHOICES = (
         ("very_clean", 'My grandmother would be proud!'),
         ("clean", 'My roommate would tolerate it!'),

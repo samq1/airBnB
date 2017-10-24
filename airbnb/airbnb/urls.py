@@ -23,7 +23,11 @@ urlpatterns = [
     url(r'^users/', include('apps.airbnb_app.urls', namespace="users")),
     url(r'^places/', include('apps.place_app.urls', namespace="places")),
     url(r'^booking/', include('apps.booking_app.urls', namespace="bookings")),
-    url(r'^message/', include('apps.messagin_app.urls', namespace="messages")),
+    url(r'^message/', include('apps.messaging_app.urls', namespace="messages")),
     url(r'^review/', include('apps.review_app.urls', namespace="reviews")),
     url(r'^', include('apps.main_router.urls', namespace="return_home")),
+<<<<<<< HEAD
+
+=======
+>>>>>>> upstream/master
 ]
