@@ -1,0 +1,11 @@
+.show-on-hover:hover > ul.dropdown-menu {
+    display: block;    
+}
+.logo {
+    height: 80%;
+}
+
+/* Typography */
+.bold {
+    font-weight: bold;
+}
