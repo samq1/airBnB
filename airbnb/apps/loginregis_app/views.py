@@ -52,7 +52,7 @@ def process(request):
 
     request.session['user_id'] = result.id
     messages.success(request, "You successfully logged in!") 
-    return redirect("/success")
+    return redirect(reverse('login:success'))
 
 def clear(request):
     del request.session['user_id']
