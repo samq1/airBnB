@@ -2,8 +2,14 @@
 
 <!-- Header Profile -->
 <h1>Hey, I'm {{ user.first_name }}!</h1>
+
+
 <div class="profile_column">
-    <img="">
+<!-- image here -->
+{% if user.image.url %}
+<img src="{{ user.image.url }}">
+{% endif %}
+
 </div>
 
 <!-- User Location and Join Date -->
