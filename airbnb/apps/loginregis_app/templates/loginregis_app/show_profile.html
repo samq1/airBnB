@@ -1,0 +1,43 @@
+{% extends 'base/base.html' %} {% block content %}
+
+<!-- Header Profile -->
+<h1>Hey, I'm {{ User.first_name }}!</h1>
+
+<!-- {{User.image}} -->
+
+<div class="profile_column">
+    <!-- image here -->
+    {% if User.image %}
+    <img src="{{ User.image.url }}" alt="Profile Image" width="200" height="200"> {% else %}
+    <p> no image here </p>
+    {% endif %}
+
+</div>
+
+<!-- User Location and Join Date -->
+<p>{{ User.city }}, {{ User.state }} {{ User.country }} | Joined in {{ User.created_at }} </p>
+
+<br>
+<p>Welcome to my page!</p>
+<br>
+<br>
+<br>
+<!-- User Bio Info -->
+<span>{{ User.bio }}</span>
+<br>
+<!-- REVIEWS HERE -->
+<h3>Travel Goals</h3>
+<br>
+<br>
+<!-- REVIEWS HERE -->
+<h2>Other people around your travel schedule!</h2>
+<div class="row">
+    {% for User in other_users %}
+    <p class="col-md-2">
+        {{ User.first_name }}
+        <a href='{% url 'login:show' User.id %}'>{{ User.first_name }} {{ User.last_name }}</a><img src="/media/{{ User.image }}" alt="Profile Image" width="50" height="50">
+    </p>
+    {% endfor %}
+</div>
+
+{% endblock %}
