@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %} {% block content %}
+
+<form action='{% url 'login:update' user.id %}' method='POST'>
+    {% csrf_token %} 
+    First Name:
+    <input type="text" name="first_name" value=" {{User.first_name }} ">
+    <br> Last Name:
+    <input type="text" name="last_name" value=" {{User.last_name }} ">
+    <br> Email:
+    <input type="text" name="email" value=" {{User.email }} ">
+    <br>
+    <input type="submit" value="Change Profile">
+</form>
+
+{% endblock %}

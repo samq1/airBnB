@@ -1,6 +1,7 @@
 
 {% extends 'base/base.html' %} {% block content %} 
 
+
 <!-- Error Messages -->
 {% if messages %}
 <ul class="messages">
@@ -45,6 +46,11 @@
             <div class="form-group ">
                 <input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="Login">
             </div>
+            <!-- LOG IN BUTTON -->
+            <div class="login-register">
+                <a href='{% url 'login:register_page' %}'>Register</a>
+            </div>
+            <!-- End of the form -->
         </form>
     </div>
 </div>

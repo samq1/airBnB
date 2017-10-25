@@ -32,7 +32,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 {% load static %}
-                <a class="navbar-brand bold" href="#">Your<img class="logo" src="{% static "/base/img/cribs.jpg" %}" alt="logo"></a>
+                <a class="navbar-brand bold" href="/">Your<img class="logo" src="{% static "/base/img/cribs.jpg" %}" alt="logo"></a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -68,7 +68,7 @@
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Login</a></li>
+                    <li><a href='{% url 'login:main_login' %}'>Login</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown show-on-hover">
