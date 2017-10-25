@@ -3,23 +3,43 @@
 <!-- Header Profile -->
 <h1>Hey, I'm {{ user.first_name }}!</h1>
 
-{{user.image}}
+<!-- {{user.image}} -->
 
 <div class="profile_column">
 <!-- image here -->
-<img src="{{ user.image.url }}">
-
+{% if user.image %}
+<img src="{{ user.image.url }}" alt="Profile Image" width="200" height="200">
+{% else %}
+<p> no image here </p>
+{% endif %}
 
 </div>
 
 <!-- User Location and Join Date -->
 <p>{{ user.city }}, {{ user.state }} {{ user.country }} | Joined in {{ user.created_at }} </p>
+
+{% if user.id is user.id %}
 <a href='{% url 'login:edit_profile' user.id %}'><button>Edit Profile</button></a>
+{% else %}
+<p>Welcome to my page!</p>
+{% endif %}
 <br>
 <br>
 <!-- User Bio Info -->
 <span>{{ user.bio }}</span>
 <br>
+<!-- TRAVELING WISHLIST -->
+<h3>Travel Goals</h3>
+<br>
+<br>
 <!-- REVIEWS HERE -->
+<h3>Other people around your travel schedule!</h3>
+<div class="row">
+    {% for User in other_users %}
+    <p class="col-md-2" ><a href='{% url 'login:show' User.id %}'>{{ User.first_name }} {{ User.last_name }}</a><img src="/media/{{ User.image }}" alt="Profile Image" width="50" height="50"></p>
+    
+     {% endfor %}
+</div>
+     
 
 {% endblock %}

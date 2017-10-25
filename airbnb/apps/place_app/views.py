@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django_filters.rest_framework import DjangoFilterBackend
+# from django_filters.rest_framework import DjangoFilterBackend
 from ..loginregis_app.models import *
 
 

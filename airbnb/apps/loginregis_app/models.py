@@ -329,6 +329,15 @@ class Place(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
+class Picture(models.Model):
+    place = models.ForeignKey(Place, related_name="place_pictures", blank=True)
+    user = models.ForeignKey(User, related_name="user_pictures", blank=True)
+    caption = models.CharField(max_length=30)
+    image = models.ImageField(upload_to='place_image', blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 class Review_Place(models.Model):
     review_place = models.ForeignKey(Place, related_name="place_reviews")
     reviewer = models.ForeignKey(User, related_name="place_reviews_from_user")
@@ -393,18 +402,10 @@ class Message(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-class Picture(models.Model):
-    place = models.ForeignKey(Place, related_name="place_pictures", blank=True)
-    user = models.ForeignKey(User, related_name="user_pictures", blank=True)
-    caption = models.CharField(max_length=30)
-    link = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-class Document(models.Model):
-    description = models.CharField(max_length=255, blank=True)
-    photo = models.FileField(upload_to='photos/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
+# class Document(models.Model):
+#     description = models.CharField(max_length=255, blank=True)
+#     photo = models.FileField(upload_to='photos/')
+#     uploaded_at = models.DateTimeField(auto_now_add=True)
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
