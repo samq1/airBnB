@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %} {% block content %}
 
-<form action='{% url 'login:update' user.id %}' method='POST'>
+<form action='{% url 'login:update' user.id %}' method='POST' enctype="multipart/form-data">
     {% csrf_token %} 
     First Name:
     <input type="text" name="first_name" value=" {{User.first_name }} ">
@@ -9,7 +9,11 @@
     <br> Email:
     <input type="text" name="email" value=" {{User.email }} ">
     <br>
+    <input type="file" name="myfile" >
+    <br><br>
     <input type="submit" value="Change Profile">
 </form>
+
+<br><br>
 
 {% endblock %}
