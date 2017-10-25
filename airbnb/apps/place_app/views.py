@@ -22,18 +22,26 @@ def show_place(request, place_id):
     return render(request, "place/show_place.html", context)
 
 
-def filter_all(request, criteria):
+def filter_all(request, ordering=None, city=None, state=None):
     # if "user_id" in request.session:
     #     return redirect('/users/all')
     # else:
     #     return redirect('/users')
+    places = Place.objects.all()
+    if city:
+        places = places.filter(city=city)
+    if state:
+        places = places.filter(state=state)
+    print "I am in filter_all()"
+    for place in places:
+        print place.name
 
-    if criteria == "price":
-        places = Place.objects.order_by('price_night')
-    elif criteria == "-price":
-        places = Place.objects.order_by('-price_night')
+    if ordering == "price":
+        places = places.order_by('price_night')
+    elif ordering == "-price":
+        places = places.order_by('-price_night')
     else:
-        places = Place.objects.order_by('price_night')
+        places = places.order_by('price_night')
 
     context = {
         "places": places,
