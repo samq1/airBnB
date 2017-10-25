@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-4 col-xs-12">
+            <form action="/places/filter" method="POST">
+                <p>Filter by Location:</p>
+                <select class="col-xs-9">
+                    {% for location in locations %}
+                    <option>{{ location.city }}, {{ location.state }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Go" style="font-size:80%">
+            </form>
+        </div>
+        <div class="col-md-4 col-xs-12">
+            <form action="/places/filter" method="POST">
+                <p>Filter by State:</p>
+                <select class="col-xs-9">
+                    {% for state in states %}
+                    <option>{{ state.state }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Go" style="font-size:80%">
+            </form>
+        </div>
+        <div class="col-md-4 col-xs-12 text-right">
+            Price <a class="text-right" href="/places/filter/ordering=price"><i class="fa fa-chevron-up"></i></a><a class="text-right"
+                href="/places/filter/ordering=-price">   <i class="fa fa-chevron-down"></i></a>
+        </div>
+
+    </div>
+    <hr>
+    {% for place in places %}
+        <div class="col-md-4 col-xs-6">
+            {% load static %}
+            <img class="row" id="place_splash_img" src={% static "/base/img/7da91a39_original.jpg" %} alt="#">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>{{place.name}}</h3>
+                </div>
+                <div class="col-md-6 text-right">
+                    <h3>${{place.price_night}}/night</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <h4>{{place.neighborhood}}, {{place.state}}</h4>
+                </div>
+                <div class="col-md-3 text-center">
+                    <h4>{{place.host.first_name}}</h4>
+                    <img id="user_profile_img" src={% static "/base/img/website/user.png" %} alt="#">
+                </div>
+            </div>
+            <hr>
+        </div>
+    {% endfor %}
+{% endblock %}

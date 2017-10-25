@@ -4,12 +4,42 @@
 .logo {
     height: 80%;
 }
+#place_splash_img {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+#user_profile_img {
+	height: 75px;
+	border-radius: 100px;
+}
 
 /* Typography */
 .bold {
     font-weight: bold;
 }
+.underline {
+	text-decoration: underline;
+}
+.red {
+	color: red;
+}
 
+.larger {
+	font-size: 145%;
+}
+
+
+.amenities {
+	list-style: none;
+	line-height: 175%;
+	letter-spacing: 0.15em;
+}
+
+.amenities-False {
+	color: lightgrey;
+	text-decoration: line-through;
+}
 
 
 
