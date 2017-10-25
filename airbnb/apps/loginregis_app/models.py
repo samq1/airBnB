@@ -117,13 +117,14 @@ class User(models.Model):
     bio = models.TextField(max_length=500)
     school = models.CharField(max_length=30, blank=True)
     work = models.CharField(max_length=30, blank=True)
+    image = models.ImageField(upload_to='profile_image', blank=True)
     password = models.CharField(max_length=30)
     confirm_password = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = UserManager()
     def __repr__(self):
-        return "<User object: {} {} {} {} {}>".format(self.id, self.email, self.password, self.created_at, self.updated_at)
+        return "<User object: {} {} {} {} {} {}>".format(self.id, self.email, self.password, self.image, self.created_at, self.updated_at)
 
 LANGUAGE_CHOICES = (
     ('ab', 'Abkhaz'),
@@ -400,5 +401,14 @@ class Picture(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+class Document(models.Model):
+    description = models.CharField(max_length=255, blank=True)
+    photo = models.FileField(upload_to='photos/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
-    
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'user_{0}/{1}'.format(instance.user.id, filename)
+
+class MyModel(models.Model):
+    upload = models.FileField(upload_to=user_directory_path)
