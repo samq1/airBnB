@@ -35,24 +35,25 @@ def register(request):
     if type(result) == list:
         for error in result:
             messages.error(request, error)
-        return redirect(reverse('login:login_index'))
+        return redirect(reverse('login:register_page'))
     request.session['user_id'] = result.id
     messages.success(request, "Successfully registered!")
     
-    return redirect(reverse('login:success'))
+    return redirect(reverse('login:user_profile'))
 
 def user_profile(request):
 # USER PROFILE --------------------------------------------
-
+    other_users = User.objects.exclude(id=request.session['user_id'])
     context = {
         'user': User.objects.get(id=request.session['user_id']),
-        # 'myfile': request.FILES['myfile'],
+        'other_users': other_users,
+
     }
-    
+
     return render(request, 'loginregis_app/user_profile.html', context)
 
 def edit(request, User_id):
-# EDIT USER PROFILE -----------------------------------------
+# EDIT USER PROFILE -------------------------------------------
     print "YOURE AT THE EDIT PAGE"
     
     context = {
@@ -61,7 +62,7 @@ def edit(request, User_id):
     return render(request, 'loginregis_app/edit_profile.html', context)
 
 def process(request):
-# USER LOGGING IN (PROCESSING INTO DATABASE) ---------------
+# USER LOGGING IN (PROCESSING INTO DATABASE) -------------------
     result = User.objects.login_validator(request.POST)
     print result
     if type(result) == list:
@@ -86,18 +87,16 @@ def update(request, User_id):
     
     return redirect(reverse('login:user_profile'))
 
-def model_form_upload(request):
-# UPLOAD PHOTOS (THIS DIDN'T WORK) -------------------------------
-    if request.method == 'POST':
-        form = DocumentForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form = DocumentForm()
-    return render(request, 'core/model_form_upload.html', {
-        'form': form
-    })
+def show(request, User_id):
+#To display OTHER User -----------------------------------------
+    other_users = User.objects.exclude(id=User_id)
+
+    context = {
+        'User': User.objects.get(id=User_id),
+        'other_users': other_users,
+    }
+
+    return render(request,'loginregis_app/show_profile.html', context)
 
 def simple_upload(request):
 # UPLOAD PHOTOS ------------------------------------------
