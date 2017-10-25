@@ -1,0 +1,19 @@
+{% extends 'base/base.html' %} {% block content %}
+
+<!-- Header Profile -->
+<h1>Hey, I'm {{ user.first_name }}!</h1>
+<div class="profile_column">
+    <img="">
+</div>
+
+<!-- User Location and Join Date -->
+<p>{{ user.city }}, {{ user.state }} {{ user.country }} | Joined in {{ user.created_at }} </p>
+<a href='{% url 'login:edit_profile' user.id %}'><button>Edit Profile</button></a>
+<br>
+<br>
+<!-- User Bio Info -->
+<span>{{ user.bio }}</span>
+<br>
+<!-- REVIEWS HERE -->
+
+{% endblock %}
