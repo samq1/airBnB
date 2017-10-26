@@ -25,6 +25,11 @@
 <!-- User Bio Info -->
 <span>{{ User.bio }}</span>
 <br>
+<!-- REVIEW BUTTON -->
+ {% if is_host == True %}  
+<a href='{% url 'reviews:review_users' User.id %}' class='btn btn-info able'>Review</a>
+{% endif %}
+<br>
 <!-- REVIEWS HERE -->
 <h3>Travel Goals</h3>
 <br>

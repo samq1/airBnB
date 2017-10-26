@@ -276,7 +276,7 @@ class Language(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __repr__(self):
-        return "<User object: {}>".format(self.language)
+        return "<Language object: {}>".format(self.language)
     
 class Place(models.Model):
     host = models.ForeignKey(User, related_name="host_places")
@@ -326,8 +326,11 @@ class Place(models.Model):
     price_servicefee = models.DecimalField(max_digits=6, decimal_places=2, blank=True)
     price_tax = models.DecimalField(max_digits=6, decimal_places=2, blank=True)
     price_amenitites = models.DecimalField(max_digits=6, decimal_places=2, blank=True)
+    listed_by = models.ManyToManyField(User, related_name="listed_places")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    def __repr__(self):
+        return "<Place object: {} {} {}>".format(self.id, self.name, self.city)
 
 
 class Picture(models.Model):
@@ -338,38 +341,59 @@ class Picture(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-class Review_Place(models.Model):
-    review_place = models.ForeignKey(Place, related_name="place_reviews")
-    reviewer = models.ForeignKey(User, related_name="place_reviews_from_user")
-    CLEANLINESS_CHOICES = (
+
+CLEANLINESS_CHOICES = (
         ("very_clean", 'My grandmother would be proud!'),
         ("clean", 'My roommate would tolerate it!'),
         ("moderately_clean", 'It reminds me of the Dojo kitchen!'),
         ("dirty", 'My unclogged toilet is cleaner than this!'),
     )
+
+class Cleanliness(models.Model):
+    choices = CLEANLINESS_CHOICES
     cleanliness = models.CharField(
         max_length=30,
         choices=CLEANLINESS_CHOICES,
     )
-    RATING_CHOICES = (
-        ('1','1 STAR'),
-        ('2','2 STARS'),
-        ('3','3 STARS'),
-        ('4','4 STARS'),
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-    )
+    def __repr__(self):
+        return "<Cleanliness object: {}>".format(self.cleanliness)
+
+RATING_CHOICES = (
+    ('1','1'),
+    ('2','2'),
+    ('3','3'),
+    ('4','4'),
+    ('5','5'),
+)
+class Rating(models.Model):
+    choices = RATING_CHOICES
     rating = models.IntegerField(
-        choices=RATING_CHOICES,
+    max_length=30,
+    choices=RATING_CHOICES,
     )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __repr__(self):
+        return "<rating object: {}>".format(self.rating)
+
+
+class Review_Place(models.Model):
+    place = models.ForeignKey(Place, related_name="place_reviews")
+    reviewer = models.ForeignKey(User, related_name="place_reviews_from_user")
+    comment_place = models.CharField(max_length=50, null=True)
     is_location_accuracy = models.BooleanField(default=True)
+    is_recommend = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 class Review_User(models.Model):
     user_being_reviewed = models.ForeignKey(User, related_name="user_review")
     reviewer = models.ForeignKey(User, related_name="user_reviews_from_user")
-    comment = models.CharField(max_length=255)
-    is_recommend = models.BooleanField()
+    comment_user = models.CharField(max_length=255, null=True)
     is_host = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
