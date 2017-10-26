@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %} {% block content %}
+
+<form class="form-horizontal" action='{% url 'reviews:process_userreview' User.id %}' method='POST'>
+   {% csrf_token %}
+  <fieldset>
+    <legend>Review Places</legend>
+      <!-- COMMENT -->
+    <div class="form-group">
+      <label for="comment_user" class="col-lg-2 control-label">Comment</label>
+      <div class="col-lg-10">
+        <textarea class="form-control" rows="3" id="comment_user" name="comment_user" placeholder=""></textarea>
+        <span class="help-block">How Was Your Host/Guest?</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+            <button type="reset" class="btn btn-default">Cancel</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+
+  </fieldset>
+</form>
+
+{% endblock %}
