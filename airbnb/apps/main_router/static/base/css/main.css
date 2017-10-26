@@ -13,10 +13,25 @@
 	height: 75px;
 	border-radius: 100px;
 }
+#booking_form {
+	margin: 20px auto;
+	margin-left: 25px;
+	padding: 20px;
+	background-color: lightgrey;
+	border: 0.75px darkslategrey solid;
+	border-radius: 10px;
+}
+.datepicker {
+	position: relative;
+	z-index: 1000;
+}
 
 /* Typography */
 .bold {
     font-weight: bold;
+}
+.italic {
+	font-style: italic;
 }
 .underline {
 	text-decoration: underline;
@@ -24,9 +39,15 @@
 .red {
 	color: red;
 }
+.blue {
+	color: dodgerblue;
+}
 
 .larger {
 	font-size: 145%;
+}
+.smaller {
+	font-size: 75%;
 }
 
 

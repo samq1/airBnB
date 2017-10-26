@@ -380,6 +380,7 @@ class Booking(models.Model):
     is_cancel = models.BooleanField(default=False)
     check_in = models.DateField()
     check_out = models.DateField()
+    num_guests = models.IntegerField(null=True, blank=True)
     date_paid = models.DateTimeField(auto_now_add=True)
     price_night = models.DecimalField(max_digits=6, decimal_places=2)
     price_cleaning = models.DecimalField(max_digits=6, decimal_places=2, blank=True)

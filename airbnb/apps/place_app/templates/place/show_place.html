@@ -8,91 +8,143 @@
     </div>
     {% load static %}
     <img class="row" id="place_splash_img" src={% static "/base/img/7da91a39_original.jpg" %} alt="#">
-    <div class="row">
-        <div class="col-md-6">
-            <h1>{{place1.name}}</h1>
+    <div class="container col-md-8">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>{{place1.name}}</h1>
+            </div>
+            <div class="col-md-6 text-right">
+                <h2>${{place1.price_night}}/night</h2>
+            </div>
         </div>
-        <div class="col-md-6 text-right">
-            <h2>${{place1.price_night}}/night</h2>
+        <div class="row">
+            <div class="col-md-9">
+                <h3>{{place1.neighborhood}}, {{place1.state}}</h3>
+            </div>
+            <div class="col-md-3 text-center">
+                <h3><a href="/login/profile/{{place.host.id}}">{{place1.host.first_name}}</a></h3>
+                <img id="user_profile_img" src={% static "/base/img/website/user.png" %} alt="#">
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-9">
-            <h3>{{place1.neighborhood}}, {{place1.state}}</h3>
-        </div>
-        <div class="col-md-3 text-center">
-            <h3><a href="/login/profile/{{place.host.id}}">{{place1.host.first_name}}</a></h3>
-            <img id="user_profile_img" src={% static "/base/img/website/user.png" %} alt="#">
-        </div>
-    </div>
-    <hr>
-    <p>{{place1.description}}</p>
-    <hr>
-    <h2>House Rules</h2>
-    <p>{{place1.house_rules}}</p>
-    <hr>
-    <h2>Cancellation Policy</h2>
-    <p>{{place1.cancellation_policy}}</p>
-    <hr>
-    {% if is_smoking_allowed == True %}
-        <p class="text-center media-middle red larger bold"><i class="material-icons">smoking_rooms</i> Smoke away at this crib!</p>
-        <p class="text-center media-middle bold">Just don't burn the place down.</p>
-    {% else %}
-        <p class="text-center media-middle red larger bold"><i class="material-icons">smoke_free</i>  This crib is smoke free</p>
-    {% endif %}
-    <hr>
-    <div class="container">
-        <h4 class="underline bold">Amenities</h4>
-        <ul class="col-md-6">
-            <li class="amenities amenities-{{place1.is_amenities_free_parking}} bold"><i class="fa fa-car"></i>  Free Parking</li>
-            <li class="amenities amenities-{{place1.is_amenities_pets_allowed}} bold"><i class="fa fa-paw" aria-hidden="true"></i>  Pets Allowed</li>
-            <hr>
-            <h5 class="bold amenities"><i class="fa fa-child" aria-hidden="true"></i>  Family and Safety</h5>
-            <li class="amenities amenities-{{place1.is_family_amenities_baby_monitor}}">Baby Monitor</li>
-            <li class="amenities amenities-{{place1.is_familty_amenities_changing_table}}">Changing Table</li>
-            <li class="amenities amenities-{{place1.is_familty_amenities_crib}}"><i class="material-icons" style="font-size:100%">child_friendly</i>  Crib for the Crib</li>
-            <li class="amenities amenities-{{place1.is_familty_amenities_high_chair}}">High Chair</li>
-            <li class="amenities amenities-{{place1.is_familty_amenities_stair_gates}}">Stair Gates</li>
-            <li class="amenities amenities-{{place1.is_familty_amenities_bathtub}}"><i class="fa fa-bath" aria-hidden="true"></i>  Bathtub</li>
-            <li class="amenities amenities-{{place1.is_familty_amenities_fireguards}}">Fireguards</li>
-            <li class="amenities amenities-{{place1.is_amenities_wheelchair}}"><i class="fa fa-wheelchair-alt" aria-hidden="true"></i>  Wheelchair Accessible</li>
-        </ul>
-        <ul class="col-md-6">
-            <h5 class="bold amenities">Basics and Facility</h5>
-            <li class="amenities amenities-{{place1.is_amenities_breakfast}}"><i class="fa fa-coffee" aria-hidden="true"></i>  Breakfast Provided</li>
-            <li class="amenities amenities-{{place1.is_amenities_kitchen}}"><i class="material-icons" style="font-size:100%">kitchen</i>  Full Kitchen and Supplies</li>
-            <li class="amenities amenities-{{place1.is_amenities_air_conditioning}}"><i class="material-icons" style="font-size:100%">ac_unit</i>  Air Conditioning</li>
-            <li class="amenities amenities-{{place1.is_amenities_heating}}">Heating</li>
-            <li class="amenities amenities-{{place1.is_amenities_fireplace}}"><i class="fa fa-fire" aria-hidden="true"></i>  Fireplace</li>
-            <li class="amenities amenities-{{place1.is_amenities_washer}}">Washer</li>
-            <li class="amenities amenities-{{place1.is_amenities_dryer}}">Dryer</li>
-            <li class="amenities amenities-{{place1.is_amenities_iron}}">Iron</li>
-            <li class="amenities amenities-{{place1.is_amenities_hair_dryer}}">Hair Dryer</li>
-            <li class="amenities amenities-{{place1.is_amenities_linen_essentials}}">Linens and Essentials</li>
-            <li class="amenities amenities-{{place1.is_amenities_hot_tub}}"><i class="material-icons" style="font-size:100%">hot_tub</i>  Hot Tub</li>
-            <li class="amenities amenities-{{place1.is_amenities_pool}}"><i class="material-icons" style="font-size:100%">pool</i>Swimming Pool</li>
-            <li class="amenities amenities-{{place1.is_amenities_gym}}"><i class="material-icons" style="font-size:100%">fitness_center</i>  Gym</li>
-            <li class="amenities amenities-{{place1.is_amenities_elevator}}">Elevator</li>
+        <hr>
+        <p>{{place1.description}}</p>
+        <hr>
+        <h2>House Rules</h2>
+        <p>{{place1.house_rules}}</p>
+        <hr>
+        <h2>Cancellation Policy</h2>
+        <p>{{place1.cancellation_policy}}</p>
+        <hr>
+        {% if is_smoking_allowed == True %}
+            <p class="text-center media-middle red larger bold"><i class="material-icons">smoking_rooms</i> Smoke away at this crib!</p>
+            <p class="text-center media-middle bold">Just don't burn the place down.</p>
+        {% else %}
+            <p class="text-center media-middle red larger bold"><i class="material-icons">smoke_free</i>  This crib is smoke free</p>
+        {% endif %}
+        <hr>
+        <div class="container">
+            <h4 class="underline bold">Amenities</h4>
+            <ul class="col-md-6">
+                <li class="amenities amenities-{{place1.is_amenities_free_parking}} bold"><i class="fa fa-car"></i>  Free Parking</li>
+                <li class="amenities amenities-{{place1.is_amenities_pets_allowed}} bold"><i class="fa fa-paw" aria-hidden="true"></i>  Pets Allowed</li>
+                <hr>
+                <h5 class="bold amenities"><i class="fa fa-child" aria-hidden="true"></i>  Family and Safety</h5>
+                <li class="amenities amenities-{{place1.is_family_amenities_baby_monitor}}">Baby Monitor</li>
+                <li class="amenities amenities-{{place1.is_familty_amenities_changing_table}}">Changing Table</li>
+                <li class="amenities amenities-{{place1.is_familty_amenities_crib}}"><i class="material-icons" style="font-size:100%">child_friendly</i>  Crib for the Crib</li>
+                <li class="amenities amenities-{{place1.is_familty_amenities_high_chair}}">High Chair</li>
+                <li class="amenities amenities-{{place1.is_familty_amenities_stair_gates}}">Stair Gates</li>
+                <li class="amenities amenities-{{place1.is_familty_amenities_bathtub}}"><i class="fa fa-bath" aria-hidden="true"></i>  Bathtub</li>
+                <li class="amenities amenities-{{place1.is_familty_amenities_fireguards}}">Fireguards</li>
+                <li class="amenities amenities-{{place1.is_amenities_wheelchair}}"><i class="fa fa-wheelchair-alt" aria-hidden="true"></i>  Wheelchair Accessible</li>
+            </ul>
+            <ul class="col-md-6">
+                <h5 class="bold amenities">Basics and Facility</h5>
+                <li class="amenities amenities-{{place1.is_amenities_breakfast}}"><i class="fa fa-coffee" aria-hidden="true"></i>  Breakfast Provided</li>
+                <li class="amenities amenities-{{place1.is_amenities_kitchen}}"><i class="material-icons" style="font-size:100%">kitchen</i>  Full Kitchen and Supplies</li>
+                <li class="amenities amenities-{{place1.is_amenities_air_conditioning}}"><i class="material-icons" style="font-size:100%">ac_unit</i>  Air Conditioning</li>
+                <li class="amenities amenities-{{place1.is_amenities_heating}}">Heating</li>
+                <li class="amenities amenities-{{place1.is_amenities_fireplace}}"><i class="fa fa-fire" aria-hidden="true"></i>  Fireplace</li>
+                <li class="amenities amenities-{{place1.is_amenities_washer}}">Washer</li>
+                <li class="amenities amenities-{{place1.is_amenities_dryer}}">Dryer</li>
+                <li class="amenities amenities-{{place1.is_amenities_iron}}">Iron</li>
+                <li class="amenities amenities-{{place1.is_amenities_hair_dryer}}">Hair Dryer</li>
+                <li class="amenities amenities-{{place1.is_amenities_linen_essentials}}">Linens and Essentials</li>
+                <li class="amenities amenities-{{place1.is_amenities_hot_tub}}"><i class="material-icons" style="font-size:100%">hot_tub</i>  Hot Tub</li>
+                <li class="amenities amenities-{{place1.is_amenities_pool}}"><i class="material-icons" style="font-size:100%">pool</i>Swimming Pool</li>
+                <li class="amenities amenities-{{place1.is_amenities_gym}}"><i class="material-icons" style="font-size:100%">fitness_center</i>  Gym</li>
+                <li class="amenities amenities-{{place1.is_amenities_elevator}}">Elevator</li>
 
-            <hr>
-            <h5 class="bold amenities">Media Options</h5>
-            <li class="amenities amenities-{{place1.is_amenities_internet}}"><i class="fa fa-wifi" aria-hidden="true"></i>  Internet</li>
-            <li class="amenities amenities-{{place1.is_familty_amenities_game_console}}">Game Console</li>
-            <li class="amenities amenities-{{place1.is_amenities_tv}}"><i class="fa fa-television" aria-hidden="true"></i>  Television</li>
-            <li class="amenities amenities-{{place1.is_amenities_cable_tv}}">Cable Network</li>
-        </ul>
+                <hr>
+                <h5 class="bold amenities">Media Options</h5>
+                <li class="amenities amenities-{{place1.is_amenities_internet}}"><i class="fa fa-wifi" aria-hidden="true"></i>  Internet</li>
+                <li class="amenities amenities-{{place1.is_familty_amenities_game_console}}">Game Console</li>
+                <li class="amenities amenities-{{place1.is_amenities_tv}}"><i class="fa fa-television" aria-hidden="true"></i>  Television</li>
+                <li class="amenities amenities-{{place1.is_amenities_cable_tv}}">Cable Network</li>
+            </ul>
+        </div>
+        <hr>
+        <div class="container">
+            <h4 class="underline bold">Pricing</h4>
+            <ul class="col-md-6">
+                <li class="amenities">Nightly Rate: <span class="bold">${{place1.price_night}}</span></li>
+                <li class="amenities">Cleaning Fee: <span class="bold">${{place1.price_cleaning}}</span></li>
+            </ul>
+            <ul class="col-md-6">
+                <li class="amenities">Cleaning Fee: <span class="bold">${{place1.price_servicefee}}</span></li>
+                <li class="amenities">Cleaning Fee: <span class="bold">${{place1.price_amenitites}}</span></li>
+            </ul>
+        </div>
     </div>
-    <hr>
-    <div class="container">
-        <h4 class="underline bold">Pricing</h4>
-        <ul class="col-md-6">
-            <li class="amenities">Nightly Rate: <span class="bold">${{place1.price_night}}</span></li>
-            <li class="amenities">Cleaning Fee: <span class="bold">${{place1.price_cleaning}}</span></li>
-        </ul>
-        <ul class="col-md-6">
-            <li class="amenities">Cleaning Fee: <span class="bold">${{place1.price_servicefee}}</span></li>
-            <li class="amenities">Cleaning Fee: <span class="bold">${{place1.price_amenitites}}</span></li>
-        </ul>
+    <div class="container-fluid col-md-4">
+        <form action="/booking/create" method="POST" class="form-horizontal col-md-11" id="booking_form">
+            {% csrf_token %}
+            <fieldset>
+                <input type="hidden" name="place" value={{place1.id}}>
+                <legend class="bold">Book this Crib</legend>
+                <legend class="blue">
+                    From <span class="bold larger">${{place1.price_night}}</span>
+                    <span class="smaller italic">per night</span>
+                </legend>
+                <div class="form-group">
+                    <label for="check_in" class="col-lg-4 control-label">Check In Date</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control check_in datepicker" name="check_in">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="check-out" class="col-lg-4 control-label">Check Out</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control check_out datepicker" name="check-out">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="num_guests" class="col-lg-4 control-label">Number of Guests</label>
+                    <div class="col-xs-8">
+                        <div class="input-group number-spinner">
+                            <span class="input-group-btn data-dwn">
+                                <button type="button" class="btn btn-default btn-info" data-dir="dwn"><span class="glyphicon glyphicon-minus"></span></button>
+                            </span>
+                            <input type="text" class="form-control text-center" value="1" min="1" max="30">
+                            <span class="input-group-btn data-up">
+                                <button type="button" class="btn btn-default btn-info" data-dir="up"><span class="glyphicon glyphicon-plus"></span></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button type="reset" class="btn btn-default">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </fieldset>
+            {% for message in messages %}
+                <li class="red bold {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %} {{ message }}
+                </li>
+            {% endfor %}
+        </form>
     </div>
 </div>
 {% endblock %}

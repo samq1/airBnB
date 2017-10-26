@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from datetime import datetime
 from ..loginregis_app.models import *
 import ast
 
@@ -17,7 +18,8 @@ def show_place(request, place_id):
         return redirect(reverse('places:does_not_exist'))
     context = {
         "users": User.objects.all(),
-        "place1": place
+        "place1": place,
+        "today": datetime.today().strftime("%Y-%m-%d")
     }
     return render(request, "place/show_place.html", context)
 
