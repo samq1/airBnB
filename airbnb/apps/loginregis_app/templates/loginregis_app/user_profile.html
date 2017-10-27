@@ -11,6 +11,7 @@
 {% endif %}
 
 <!-- Header Profile -->
+
 <h1>Hey, I'm {{ user.first_name }}!</h1>
 <h3>Username: {{request.session.username}}</h3>
 
@@ -19,11 +20,13 @@
 <div class="profile_column">
 
 <!-- image here -->
-{% if user.image %}
-<img src="{{ user.image.url }}" alt="Profile Image" width="200" height="200">
-{% else %}
-<p> no image here </p>
-{% endif %}
+<div class="well">
+     {% if user.image %}
+    <img src="{{ user.image.url }}" alt="Profile Image" width="200" height="200"> {% else %}
+    <p> no image here </p>
+    {% endif %}
+</div>
+
 
 </div>
 
@@ -45,11 +48,8 @@
 <div class="row">
     {% for Booking in my_travels %}
     <p class="col-md-2">
-        <a href='{% url 'places:show' Booking.place.id %}'>{{ Booking.place.name }} </a> <br> <a href='{% url 'reviews:review_places' Booking.place.id %}'>Review Their Place</a>
-        <!-- <img src="/media/{{ Booking.place.image.image.url }}" alt="Profile Image" width="50"
-            height="50"> -->
+        <a href='{% url 'places:show' Booking.place__id %}'>{{ Booking.place__name }}</a> <br> <a href='{% url 'reviews:review_places' Booking.place__id %}'>Review Their Place</a>
     </p>
-
     {% endfor %}
 </div>
 <br>

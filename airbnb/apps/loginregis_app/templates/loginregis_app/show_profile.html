@@ -35,8 +35,11 @@
 <br>
 <!-- REVIEWS HERE -->
 <h3>Travel Goals</h3>
-<br>
-<br>
+    {% for Booking in my_travels %}
+    <p class="col-md-2">
+        <a href='{% url 'places:show' Booking.place__id %}'>{{ Booking.place__name }}</a> <br> <a href='{% url 'reviews:review_places' Booking.place__id %}'>Review Their Place</a>
+    </p>
+    {% endfor %}
 <!-- REVIEWS HERE -->
 <h2>Other people around your their schedule!</h2>
 <div class="row">
