@@ -1,8 +1,314 @@
-{% extends 'base/base.html' %}
-{% block content %}
-<div class="post">
-    
-    <h1>This is new content</h1>
-    <p>asdlfjk sadf;lakjsd f;aksjdf ;alskdjf a;sdjf ;alsdjfa;sdjf a;lskldjf;alsdjf iqwetpquwgpndfb ipqn</p>
+{% extends 'base/base.html' %} {% block content %}
+<h1>Hey, {{ user.first_name }}! Let’s get started listing your crib.</h1>
+
+<!-- {% load static %} -->
+<!-- <img src="{% static "images/airbnb.gif" %}" alt="My image" /> -->
+
+<div class="container-fluid">
+    <div class="col-xs-12 text-right">
+        <form action="/places/filter/ordering=price" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Return to Search Results" style="font-size:80%">
+        </form>
+    </div>
 </div>
+<form class="form-horizontal" action='{% url 'places:adding_host' %}' method="POST">
+     {% csrf_token %}
+    <fieldset>
+        <legend>Create a New Crib</legend>
+        <div class="form-group">
+            <label for="name" class="col-lg-2 control-label">Your Crib Name</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="name" placeholder="my crib" value="{{place1.name}}">
+            </div>
+        </div>
+        <hr>
+        <legend>Address Information</legend>
+        <p>Your address will not be shared with a guest until you agree to book their stay.</p>
+        <div class="form-group">
+            <label for="address" class="col-lg-2 control-label">Street Address</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="address" placeholder="street address" value="{{place1.address}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="city" class="col-lg-2 control-label">City</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="city" placeholder="city" value="{{place1.city}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="neighborhood" class="col-lg-2 control-label">Neighborhood</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="neighborhood" placeholder="neighborhood" value="{{place1.neighborhood}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="state" class="col-lg-2 control-label">State</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="state" placeholder="state" value="{{place1.state}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="zipcode" class="col-lg-2 control-label">Postal Code</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="zipcode" placeholder="zipcode" value="{{place1.zipcode}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="country" class="col-lg-2 control-label">Country</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="country" placeholder="country" value="{{place1.country}}">
+            </div>
+        </div>
+        <hr>
+    
+        <legend>Information about Your Crib</legend>
+        <div class="form-group">
+            <label for="description" class="col-lg-2 control-label">Description</label>
+            <div class="col-lg-10">
+                <textarea class="form-control" rows="3" name="description">{{place1.description}}</textarea>
+                <span class="help-block">
+                    Be as descriptive about your place as possible. Here are some ideas:
+                    <ul>
+                        <li>How many people can stay in your crib?</li>
+                        <li>What makes your crib unique?</li>
+                        <li>What is the neighborhood like?</li>
+                        <li>What can guests do when they visit your crib?</li>
+                    </ul>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="house_rules" class="col-lg-2 control-label">Crib Rules</label>
+            <div class="col-lg-10">
+                <textarea class="form-control" rows="3" name="house_rules">{{place1.house_rules}}</textarea>
+                <span class="help-block">
+                    <ul>
+                        <li>What is allowed and not allowed at your crib?</li>
+                    </ul>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="house_rules" class="col-lg-2 control-label">Neighborhood</label>
+            <div class="col-lg-10">
+                <textarea class="form-control" rows="3" name="neigborhood">{{place1.neigborhood}}</textarea>
+                <span class="help-block">
+                    <ul>
+                        <li>Here, you can describe your neighborhood.</li>
+                    </ul>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="cancellation_policy" class="col-lg-2 control-label">Cancellation Policy Rules</label>
+            <div class="col-lg-10">
+                <textarea class="form-control" rows="3" name="cancellation_policy">{{place1.cancellation_policy}}</textarea>
+                <span class="help-block">
+                    <ul>
+                        <li>You can make your own cancellation policy.</li>
+                    </ul>
+                </span>
+            </div>
+        </div>
+        <hr>
+<!-- CHECKLIST -->
+        <legend>What do you have at your crib?</legend>
+        <div class="form-group">
+            <label for="Amenitites" class="col-lg-2 control-label">Amenities</label>
+            <div class="col-lg-2">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id= "is_smoking_allowed" name="is_smoking_allowed"><p>Smoking allowed</p> 
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_amenities_free_parking"><p>Free Parking</p>
+                    </label>
+                     <br>
+                    <label>
+                        <input type="checkbox" name="is_family_amenities_baby_monitor"><p>Baby Monitor</p>
+                    </label>
+                     <br>
+                    <label>
+                        <input type="checkbox" name="is_familty_amenities_bathtub"><p>Bathtub</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_familty_amenities_changing_table"><p>Changing Table</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_familty_amenities_crib"><p>Crib</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_familty_amenities_fireguards"><p>Fireguards</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_familty_amenities_game_console"><p>Game Console</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_familty_amenities_stair_gates"><p>Stair Gates</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_amenities_pool"><p>Pool</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_amenities_pets_allowed"><p>Pets Allowed</p>
+                    </label>
+                </div>
+            </div>
+<!-- Another Div -->
+            <div class="col-lg-2">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="is_amenities_gym"><p>Free Gym</p>
+                    </label>
+                     <br>
+                    <label>
+                        <input type="checkbox" name="is_amenities_hot_tub"><p>Hot Tub</p>
+                    </label>
+                     <br>
+                    <label>
+                        <input type="checkbox" name="is_amenities_washer"><p>Washer</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_amenities_dryer"><p>Dryer</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_amenities_internet"><p>Internet</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_amenities_elevator"><p>Elevator</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_amenities_fireplace"><p>Fireplace</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_amenities_cable_tv"><p>Cable TV</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_amenities_heating"><p>Heating</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_amenities_hair_dryer"><p>Hair Dryer</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_familty_amenities_high_chair"><p>High Chair</p>
+                    </label>
+                </div>
+            </div>
+<!-- ANOTHER DIV -->
+          <div class="col-lg-3">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="is_amenities_breakfast"><p>Complimentary Breakfast</p> 
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_amenities_air_conditioning"><p>Air Conditioning</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_amenities_wheelchair"><p>Accessible Wheelchair</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_amenities_linen_essentials"><p>Linen and Essentials</p>
+                    </label>
+                     <br>
+                    <label>
+                        <input type="checkbox" name="is_amenities_kitchen"><p>Full Kitchen Supplies</p>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="is_amenities_iron"><p>Iron</p>
+                    </label>
+                    <br>
+                     <label>
+                        <input type="checkbox" name="is_amenities_tv"><p>TV</p>
+                    </label>
+                    <br>
+                    
+                </div>
+            </div>
+
+            </div>
+            
+            <legend>How much do you wan to charge for your crib?</legend>
+
+            <div class="form-group">
+                <label for="prices" class="col-lg-2 control-label">How much do you charge your crib?</label>
+                <div class="col-md-2">
+                    <label class="control-label">Price Per Night</label>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input type="text" name="price_night" placeholder="ex: 450.00" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label">Cleaning Fee</label>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input type="text" name="price_cleaning" placeholder="ex: 20.00" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label">Amenities Fee</label>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input type="text" name="price_amenitites" placeholder="ex: 20.00" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <br>
+            <legend>Checking In</legend>
+
+            <div class="form-group">
+                <label for="prices" class="col-lg-2 control-label">What is your best time for people to come to your crib?</label>
+                <div class="col-md-2">
+                    <label class="control-label">Check-in</label>
+                    <br>
+                    <div class="input-group">
+                        <input type="text" name="check_in_time" placeholder="ex: 10 AM" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label">Check-out</label>
+                    <br>
+                    <div class="input-group">
+                        <input type="text" name="check_out_time" placeholder="ex: 4 PM" class="form-control">
+                    </div>
+                </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button type="reset" class="btn btn-default">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+    
+</fieldset>
+</form>
+
 {% endblock %}

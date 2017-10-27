@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %} {% block content %}
+<h1>Don't forget, {{user.first_name}}! Do you want to upload the pics for your crib?</h1>
+
+<form action='{% url 'places:upload_place' place.id %}' method="post" enctype="multipart/form-data">
+     {% csrf_token %}
+  <fieldset>
+    <legend>We want to see your crib</legend>
+    <div class="form-group">
+      <label for="upload_pic" class="col-lg-2 control-label">Upload Picture</label>
+      <div class="col-lg-10">
+        <input type="file" name="myfile">
+      </div>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="caption" class="col-lg-2 control-label">Caption</label>
+        <div class="col-lg-10">
+            <input type="text" class="form-control" name="caption" placeholder="Caption">
+        </div>
+    </div>
+<br><br>
+    <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-default">Cancel</button>
+            <a href="" class="btn btn-default able">Continue without uploading</a>
+        </div>
+    </div>
+  </fieldset>
+</form>
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+
+
+{% endblock %}

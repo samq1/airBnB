@@ -1,5 +1,15 @@
 {% extends 'base/base.html' %} {% block content %}
 
+{% if messages %}
+<ul class="messages">
+{% for message in messages %}
+<li{% if message.tags %} class="{{ message.tags }}" {% endif %}>
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %} {{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 <!-- Header Profile -->
 <h1>Hey, I'm {{ user.first_name }}!</h1>
 
@@ -35,8 +45,8 @@
 <!-- REVIEWS HERE -->
 <h3>Other people around your travel schedule!</h3>
 <div class="row">
-    {% for User in other_users %}
-    <p class="col-md-2" ><a href='{% url 'login:show' User.id %}'>{{ User.first_name }} {{ User.last_name }}</a><img src="/media/{{ User.image }}" alt="Profile Image" width="50" height="50"></p>
+    {% for User in users_around_you %}
+    <p class="col-md-2" ><a href='{% url 'login:show' User.id %}'>{{ User.first_name }} {{ User.last_name }}</a> <img src="/media/{{ User.image }}" alt="Profile Image" width="50" height="50"></p>
     
      {% endfor %}
 </div>
