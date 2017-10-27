@@ -13,4 +13,9 @@ urlpatterns = [
     url(r'^(?P<place_id>\d+)$', views.show_place, name="show"),
     url(r'^(?P<place_id>\d+)/edit$', views.edit_place, name="edit"),
     url(r'^does_not_exist$', views.does_not_exist, name="does_not_exist"),
+    url(r'^becomehost$', views.become_host, name="become_host"),
+    url(r'^addinghost$', views.adding_host, name="adding_host"),
+    url(r'^uploads/simple/$', views.simple_upload, name='simple_upload'),
+    url(r'^(?P<place_id>\d+)/uploading$', views.upload, name='upload_place'),
+    url(r'^(?P<place_id>\d+)/upload_pic$', views.upload_page, name='upload_page'),
 ]

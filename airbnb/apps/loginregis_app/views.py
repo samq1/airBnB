@@ -43,10 +43,15 @@ def register(request):
 
 def user_profile(request):
 # USER PROFILE --------------------------------------------
+    user = User.objects.get(id=request.session['user_id'])
+    print user.state
     other_users = User.objects.exclude(id=request.session['user_id'])
+    users_around_you = User.objects.filter(state=user.state).exclude(id=request.session['user_id'])
+
     context = {
         'user': User.objects.get(id=request.session['user_id']),
         'other_users': other_users,
+        'users_around_you': users_around_you,
 
     }
 
@@ -89,11 +94,15 @@ def update(request, User_id):
 
 def show(request, User_id):
 #To display OTHER User -----------------------------------------
+    that_user = User.objects.get(id=User_id)
     other_users = User.objects.exclude(id=User_id)
+    users_around_them = User.objects.filter(state=that_user.state).exclude(id=User_id)
+
 
     context = {
         'User': User.objects.get(id=User_id),
         'other_users': other_users,
+        'users_around_them': users_around_them,
     }
 
     return render(request,'loginregis_app/show_profile.html', context)

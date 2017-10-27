@@ -35,12 +35,11 @@
 <br>
 <br>
 <!-- REVIEWS HERE -->
-<h2>Other people around your travel schedule!</h2>
+<h2>Other people around your their schedule!</h2>
 <div class="row">
-    {% for User in other_users %}
+    {% for User in users_around_them %}
     <p class="col-md-2">
-        {{ User.first_name }}
-        <a href='{% url 'login:show' User.id %}'>{{ User.first_name }} {{ User.last_name }}</a><img src="/media/{{ User.image }}" alt="Profile Image" width="50" height="50">
+        <a href='{% url 'login:show' User.id %}'>{{ User.first_name }} {{ User.last_name }}</a> <img src="/media/{{ User.image }}" alt="Profile Image" width="45" height="45">
     </p>
     {% endfor %}
 </div>
