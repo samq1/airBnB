@@ -353,8 +353,9 @@ def show_host_all_cribs(request):
     if 'user_id' not in request.session:
         return redirect(reverse('login:main_login'))
     current_user = User.objects.get(id=request.session['user_id'])
-    hosted_places = Place.objects.filter(host=current_user).annotate(num_bookings=Count('place_bookings'))
-    bookings = Booking.objects.all()
+    hosted_places = Place.objects.filter(host=current_user).annotate(
+        num_bookings=Count('place_bookings')).order_by('name')
+    bookings = Booking.objects.all().order_by('-check_in')
     for booking in bookings:
         print booking.id
     context = {

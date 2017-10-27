@@ -47,6 +47,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href='{% url 'places:become_host' %}'>Host Your Crib<span class="sr-only">(current)</span></a></li>
+                    {% if request.session.user_id %}
                     <li class="dropdown show-on-hover">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">My Crib Stays <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
@@ -56,14 +57,14 @@
                             <li><a href="#">Crib Wishes</a></li>
                         </ul>
                     </li>
+                    {% endif %}
                     {% if request.session.user_is_host %}
                     <li class="dropdown show-on-hover">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Manage My Cribs <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">My Cribs</a></li>
-                            <li><a href="#">Reviews</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Guests</a></li>
+                            <li><a href="/places/host/my_cribs">My Cribs</a></li>
+                            <!-- <li class="divider"></li>
+                            <li><a href="#">Guests</a></li> -->
                         </ul>
                     </li>
                     {% endif %}
@@ -90,9 +91,11 @@
                         </ul>
                     </li>
                 </ul> -->
+                {% if request.session.user_id %}
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{% url 'login:user_profile' %}">Hello, {{request.session.user_first_name}} {{request.session.user_last_name}}</a></li>
                 </ul>
+                {% endif %}
             </div>
         </div>
     </nav>

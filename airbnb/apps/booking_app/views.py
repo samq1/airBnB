@@ -98,10 +98,10 @@ def booking_success(request, booking_id):
     charge_total = booking.price_night + booking.price_cleaning + booking.price_servicefee + booking.price_amenitites + booking.price_tax
     guest = User.objects.get(id=request.session['user_id'])
 
-    booking.listed_by.add(guest)
-    guest.listed_vacations.add(booking_id)
-    booking.save()
-    guest.save()
+    # booking.listed_by.add(guest)
+    # guest.listed_vacations.add(booking_id)
+    # booking.save()
+    # guest.save()
 
     context = {
         'user_name': user_name,

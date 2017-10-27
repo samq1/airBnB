@@ -13,7 +13,7 @@
 	height: 75px;
 	border-radius: 100px;
 }
-#banner_img {
+.banner_img {
 	height: 200px
 }
 #booking_form {
@@ -146,7 +146,7 @@ input::-webkit-input-placeholder {
 	text-align: center;
 }
 
-.container-outer { overflow: scroll; width: 950px; height: 210px; }
+.container-outer { overflow-y: hidden; overflow-x: scroll; height: 220px; }
 .container-inner { width: 10000px; }
 
 #front_look{
