@@ -8,7 +8,6 @@ $(function () {
     var new_date = new Date();
     new_date.setDate(today.getDate() + 1);
     $(".datepicker.check_in").datepicker("setDate", new Date());
-    $(".datepicker.check_in").datepicker("option", "minDate", new Date());
     $(".datepicker.check_in").datepicker("option", "onSelect", function(dateText) {
         curr_date = $(".datepicker.check_in").datepicker("getDate");
         console.log(curr_date);

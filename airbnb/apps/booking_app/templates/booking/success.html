@@ -1,7 +1,31 @@
 {% extends 'base/base.html' %}
 {% block content %}
-    <h1>Congratulations, {{user_name}}, you booked a crib!</h1>
+    <h1>Congratulations, {{user_name}}, you have reserved a crib!</h1>
     <hr>
-    <p>Crib</p>
+    <p>Print this page for your records.</p>
+    <hr>
+<div class="col-md-6">
+    <h4>You are staying at <a href="/places/{{booking.place.id}}">{{booking.place.name}}</a></h4>
+    <h4>{{booking.place.city}}, {{booking.place.state}} ({{booking.place.country}})</h4>
+    <h4><a href="login/profile{{booking.place.host.id}}">Host: {{booking.place.host.first_name}} {{booking.place.host.last_name}}</a></h4>
+    <hr>
+    <h4 class="bold underline">Address</h4>
+    <p>{{booking.place.address}}</p>
+    <p>{{booking.place.city}}, {{booking.place.state}}  {{booking.place.zipcode}} ({{booking.place.country}})</p>
+    <hr>
+    <h4 class="underline">Contact the Host</h4>
+    <p>{{booking.place.host.phone_number}}</p>
+    <hr>
+</div>
+<div class="col-md-6">
+    <h4>Checking in on: <span class="bold">{{booking.check_in}}</span>, <span class="italic">after {{booking.place.check_in_time}}</span></h4>
+    <h4>Checking out on: <span class="bold">{{booking.check_out}}</span>, <span class="italic">before {{booking.place.check_out_time}}</span></h4>
+    <h4>Number of guests: {{booking.num_guests}}</h4>
+    <hr>
+    {% load humanize %}
+    <h4 class="bold"><span class="underline">Your account was charged ${{charge_total|intcomma}}</span><br> on {{booking.date_paid}}</h4>
+    <hr>
+    <h4 class="underline">Cancellation Policy</h4>
+    <p>{{booking.place.cancellation_policy}}</p>
 </div>
 {% endblock %}

@@ -97,13 +97,13 @@
                 <li class="amenities">Cleaning Fee: <span class="bold">${{place1.price_cleaning}}</span></li>
             </ul>
             <ul class="col-md-6">
-                <li class="amenities">Cleaning Fee: <span class="bold">${{place1.price_servicefee}}</span></li>
-                <li class="amenities">Cleaning Fee: <span class="bold">${{place1.price_amenitites}}</span></li>
+                <li class="amenities">Service Fee: <span class="bold">${{place1.price_servicefee}}</span></li>
+                <li class="amenities">Amenities Fee: <span class="bold">${{place1.price_amenitites}}</span></li>
             </ul>
         </div>
     </div>
     <div class="container-fluid col-md-4">
-        <form action="/booking/create" method="POST" class="form-horizontal col-md-11" id="booking_form">
+        <form action="/booking/{{place1.id}}/confirm" method="POST" class="form-horizontal col-md-11" id="booking_form">
             {% csrf_token %}
             <fieldset>
                 <input type="hidden" name="place" value={{place1.id}}>
@@ -119,9 +119,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="check-out" class="col-lg-4 control-label">Check Out</label>
+                    <label for="check_out" class="col-lg-4 control-label">Check Out</label>
                     <div class="col-lg-8">
-                        <input type="text" class="form-control check_out datepicker" name="check-out">
+                        <input type="text" class="form-control check_out datepicker" name="check_out">
                     </div>
                 </div>
                 <div class="form-group">
@@ -131,7 +131,7 @@
                             <span class="input-group-btn data-dwn">
                                 <button type="button" class="btn btn-default btn-info" data-dir="dwn"><span class="glyphicon glyphicon-minus"></span></button>
                             </span>
-                            <input type="text" class="form-control text-center" value="1" min="1" max="30">
+                            <input type="text" class="form-control text-center" name="num_guests" value="1" min="1" max="30">
                             <span class="input-group-btn data-up">
                                 <button type="button" class="btn btn-default btn-info" data-dir="up"><span class="glyphicon glyphicon-plus"></span></button>
                             </span>
