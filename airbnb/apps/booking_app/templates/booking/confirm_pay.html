@@ -1,0 +1,87 @@
+{% extends 'base/base.html' %} {% block content %}
+<h1>You are about to reserve a crib!</h1>
+<hr>
+<div class="container-fluid col-md-6">
+    <h3>Crib: {{place1.name}}</h3>
+    <h4>{{place1.city}}, {{place1.state}}, {{place1.country}}</h4>
+    <h4>Host: {{place1.host.first_name}} {{place1.host.last_name}}</h4>
+    <hr>
+    <h4>Checking in on: <span class="bold">{{check_in_date|date:"D d M Y"}}</span>, <span class="italic smaller">after {{place1.check_in_time}}</span></h4>
+    <h4>Checking out on: <span class="bold">{{check_out_date|date:"D d M Y"}}</span>, <span class="italic smaller">before {{place1.check_out_time}}</span></h4>
+    <h4>Number of guests: {{num_guests}}</h4>
+    <hr>
+    <h4 class="bold underline">Pricing:</h4>
+    <div class="col-md-7 offset-md-2">
+        {% load humanize %}
+        <table class="table table-hover text-right">
+            <tr>
+                <td>Price per Night</td>
+                <td>${{place1.price_night|intcomma}}</td>
+            </tr>
+            <tr class="bg-info">
+                <td>Number of Nights</td>
+                <td>${{num_nights}}</td>
+            </tr>
+            <tr class="bg-info">
+                <td>Price for all Nights</td>
+                <td>${{charge_nights|intcomma}}</td>
+            </tr>
+            <tr>
+                <td>Cleaning</td>
+                <td>${{place1.price_cleaning|intcomma}}</td>
+            </tr>
+            <tr>
+                <td>Service Fee</td>
+                <td>${{place1.price_servicefee|intcomma}}</td>
+            </tr>
+            <tr>
+                <td>Amenities</td>
+                <td>${{place1.price_amenitites|intcomma}}</td>
+            </tr>
+            <tr class="bg-info">
+                <td class="italic">Subtotal</td>
+                <td class="bold">${{charge_subtotal|intcomma}}</td>
+            </tr>
+            <tr class="bg-info">
+                <td class="italic">Tax</td>
+                <td class="bold">${{charge_tax|intcomma}}</td>
+            </tr>
+            <tr class="bg-primary">
+                <td class="italic white">Total Charge</td>
+                <td class="bold white larger">${{charge_total|intcomma}}</td>
+            </tr>
+        </table>
+        <hr>
+    </div>
+</div>
+<div class="container col-md-4">
+    <div class="container col-md-11">
+        <h4 class="underline">House Rules:</h4>
+        <p>{{place1.house_rules}}</p>
+        <hr>
+        <h4 class="underline">Cancellation Policy:</h4>
+        <p>{{place1.cancellation_policy}}</p>
+    </div>
+    <hr>
+    <div class="form-horizontal col-md-11" id="booking_form">
+        {% csrf_token %}
+        <input type="hidden" name="place" value={{place1.id}}>
+        <legend class="bold">Confirm and Book!</legend>
+            <div class="form-group">
+                <div class="row col-md-10 col-lg-offset-1 text-right">
+                    <form action="/booking/{{place1.id}}/create" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    <br>
+                    <form action="/places/{{place1.id}}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-default">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>
+
+</div>
+{% endblock %}
