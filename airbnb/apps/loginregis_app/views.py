@@ -47,7 +47,11 @@ def register(request):
         for error in result:
             messages.error(request, error)
         return redirect(reverse('login:register_page'))
+
     request.session['user_id'] = result.id
+    request.session['username'] = result.username
+    request.session['user_first_name'] = result.first_name
+    request.session['user_last_name'] = result.last_name
     messages.success(request, "Successfully registered!")
     
     return redirect(reverse('login:user_profile'))
@@ -58,8 +62,9 @@ def user_profile(request):
     print user.state
     other_users = User.objects.exclude(id=request.session['user_id'])
     users_around_you = User.objects.filter(state=user.state).exclude(id=request.session['user_id'])
-    my_travels = user.listed_vacations.all()
+    my_travels = Booking.objects.filter(guest=user).values('place__id', 'place__name', 'place__city').distinct()
     place = Place.objects.all()
+    print my_travels
 
     context = {
         'user': User.objects.get(id=request.session['user_id']),
@@ -121,12 +126,13 @@ def show(request, User_id):
     that_user = User.objects.get(id=User_id)
     other_users = User.objects.exclude(id=User_id)
     users_around_them = User.objects.filter(state=that_user.state).exclude(id=User_id)
-
+    my_travels = Booking.objects.filter(guest=User).values('place__id', 'place__name', 'place__city').distinct()
 
     context = {
         'User': User.objects.get(id=User_id),
         'other_users': other_users,
         'users_around_them': users_around_them,
+        'my_travels': my_travel
     }
 
     return render(request,'loginregis_app/show_profile.html', context)

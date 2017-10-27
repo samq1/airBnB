@@ -14,10 +14,8 @@ def route_handler(request):
 
 def new_page(request, ordering=None, city=None, state=None):
 
-
-
     places = Place.objects.all()
-    pic = Picture.objects.all()
+
     if city:
         city = city.replace("_", " ")
         places = places.filter(city=city)
@@ -37,10 +35,9 @@ def new_page(request, ordering=None, city=None, state=None):
         "locations": Place.objects.order_by(
             'city').values('city', 'state').distinct(),
         "states": Place.objects.order_by('state').values('state').distinct(),
-        "Picture": Picture.objects.all().values('caption'),
+        "Picture": Picture.objects.all().values('image'),
         "place": Place.objects.all(),
     }
-   
-
+    
 
     return render(request, "base/new.html", context)

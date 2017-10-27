@@ -101,7 +101,7 @@ def booking_success(request, booking_id):
     booking.listed_by.add(guest)
     guest.listed_vacations.add(booking_id)
     booking.save()
-    guest.save()
+    # guest.save()
 
     context = {
         'user_name': user_name,

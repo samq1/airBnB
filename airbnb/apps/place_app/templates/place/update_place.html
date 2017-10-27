@@ -1,277 +1,31 @@
-{% extends 'base/base.html' %} {% block content %}
-<div class="container-fluid">
-    <div class="col-xs-12 text-right">
-        <form action="/places/filter/ordering=price" method="POST">
-            {% csrf_token %}
-            <input type="submit" value="Return to Search Results" style="font-size:80%">
-        </form>
-    </div>
-</div>
-<form class="form-horizontal" action="/places/update" method="POST">
-    
-    <fieldset>
-        <legend>Create a New Crib</legend>
-        <div class="form-group">
-            <label for="name" class="col-lg-2 control-label">Crib Name</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" id="name" placeholder="my crib" value="{{place1.name}}">
-            </div>
-        </div>
-        <hr>
-        <legend>Address Information</legend>
-        <p>Your address will not be shared with a gues until you agree to book their stay.</p>
-        <div class="form-group">
-            <label for="address" class="col-lg-2 control-label">Street Address</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" id="address" placeholder="street address" value="{{place1.address}}">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="city" class="col-lg-2 control-label">City</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" id="city" placeholder="city" value="{{place1.city}}">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="neighborhood" class="col-lg-2 control-label">Neighborhood</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" id="neighborhood" placeholder="neighborhood" value="{{place1.neighborhood}}">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="state" class="col-lg-2 control-label">State</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" id="state" placeholder="state" value="{{place1.state}}">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="zipcode" class="col-lg-2 control-label">Postal Code</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" id="zipcode" placeholder="zipcode" value="{{place1.zipcode}}">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="country" class="col-lg-2 control-label">Country</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" id="country" placeholder="country" value="{{place1.country}}">
-            </div>
-        </div>
-        <hr>
-        <legend>Information about Your Crib</legend>
-        <div class="form-group">
-            <label for="description" class="col-lg-2 control-label">Description</label>
-            <div class="col-lg-10">
-                <textarea class="form-control" rows="3" id="description">{{place1.description}}</textarea>
-                <span class="help-block">
-                    Be as descriptive about your place as possible. Here are some ideas:
-                    <ul>
-                        <li>How many people can stay in your crib?</li>
-                        <li>What makes your crib unique?</li>
-                        <li>What is the neighborhood like?</li>
-                        <li>What can guests do when they visit your crib?</li>
-                    </ul>
-                </span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="house_rules" class="col-lg-2 control-label">Crib Rules</label>
-            <div class="col-lg-10">
-                <textarea class="form-control" rows="3" id="house_rules">{{place1.house_rules}}</textarea>
-                <span class="help-block">
-                    <ul>
-                        <li>What is allowed and not allowed at your crib?</li>
-                    </ul>
-                </span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="cancellation_policy" class="col-lg-2 control-label">Cancellation Policy Rules</label>
-            <div class="col-lg-10">
-                <textarea class="form-control" rows="3" id="cancellation_policy">{{place1.cancellation_policy}}</textarea>
-                <span class="help-block">
-                    <ul>
-                        <li>What is allowed and not allowed at your crib?</li>
-                    </ul>
-                </span>
-            </div>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <hr>
-        <hr>
-        <hr>
-        <hr>
-        <hr>
-        <hr>
-        <hr>
-        <hr>
-        <hr>
-        <hr>
-        <hr>
-
-
-
-
-
-
-        <div class="form-group">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox"> Checkbox
-                </label>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="textArea" class="col-lg-2 control-label">Textarea</label>
-            <div class="col-lg-10">
-                <textarea class="form-control" rows="3" id="textArea"></textarea>
-                <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Radios</label>
-            <div class="col-lg-10">
-                <div class="radio">
-                    <label>
-            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-            Option one is this
-          </label>
-                </div>
-                <div class="radio">
-                    <label>
-            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-            Option two can be something else
-          </label>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="select" class="col-lg-2 control-label">Selects</label>
-            <div class="col-lg-10">
-                <select class="form-control" id="select">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </select>
-                <br>
-                <select multiple="" class="form-control">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-lg-10 col-lg-offset-2">
-                <button type="reset" class="btn btn-default">Cancel</button>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </div>
-    </fieldset>
-
-
-
-
-</form>
-<div class="row">
-    <div class="col-md-6">
-        <h1>{{place1.name}}</h1>
-    </div>
-    <div class="col-md-6 text-right">
-        <h2>${{place1.price_night}}/night</h2>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-9">
-        <h3>{{place1.neighborhood}}, {{place1.state}}</h3>
-    </div>
-    <div class="col-md-3 text-center">
-        <h3><a href="/login/profile/{{place.host.id}}">{{place1.host.first_name}}</a></h3>
-    </div>
-</div>
-<hr>
-<p>{{place1.description}}</p>
-<hr>
-<h2>House Rules</h2>
-<p>{{place1.house_rules}}</p>
-<hr>
-<h2>Cancellation Policy</h2>
-<p>{{place1.cancellation_policy}}</p>
-<hr> {% if is_smoking_allowed == True %}
-<p class="text-center media-middle red larger bold"><i class="material-icons">smoking_rooms</i> Smoke away at this crib!</p>
-<p class="text-center media-middle bold">Just don't burn the place down.</p>
-{% else %}
-<p class="text-center media-middle red larger bold"><i class="material-icons">smoke_free</i> This crib is smoke free</p>
+<!-- Error Messages -->
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %} {{ message }}
+        </li>
+        {% endfor %}
+</ul>
 {% endif %}
-<hr>
-<div class="container">
-    <h4 class="underline bold">Amenities</h4>
-    <ul class="col-md-6">
-        <li class="amenities amenities-{{place1.is_amenities_free_parking}} bold"><i class="fa fa-car"></i> Free Parking</li>
-        <li class="amenities amenities-{{place1.is_amenities_pets_allowed}} bold"><i class="fa fa-paw" aria-hidden="true"></i> Pets Allowed</li>
-        <hr>
-        <h5 class="bold amenities"><i class="fa fa-child" aria-hidden="true"></i> Family and Safety</h5>
-        <li class="amenities amenities-{{place1.is_family_amenities_baby_monitor}}">Baby Monitor</li>
-        <li class="amenities amenities-{{place1.is_familty_amenities_changing_table}}">Changing Table</li>
-        <li class="amenities amenities-{{place1.is_familty_amenities_crib}}"><i class="material-icons" style="font-size:100%">child_friendly</i> Crib for the Crib</li>
-        <li class="amenities amenities-{{place1.is_familty_amenities_high_chair}}">High Chair</li>
-        <li class="amenities amenities-{{place1.is_familty_amenities_stair_gates}}">Stair Gates</li>
-        <li class="amenities amenities-{{place1.is_familty_amenities_bathtub}}"><i class="fa fa-bath" aria-hidden="true"></i> Bathtub</li>
-        <li class="amenities amenities-{{place1.is_familty_amenities_fireguards}}">Fireguards</li>
-        <li class="amenities amenities-{{place1.is_amenities_wheelchair}}"><i class="fa fa-wheelchair-alt" aria-hidden="true"></i> Wheelchair Accessible</li>
-    </ul>
-    <ul class="col-md-6">
-        <h5 class="bold amenities">Basics and Facility</h5>
-        <li class="amenities amenities-{{place1.is_amenities_breakfast}}"><i class="fa fa-coffee" aria-hidden="true"></i> Breakfast Provided</li>
-        <li class="amenities amenities-{{place1.is_amenities_kitchen}}"><i class="material-icons" style="font-size:100%">kitchen</i> Full Kitchen and Supplies</li>
-        <li class="amenities amenities-{{place1.is_amenities_air_conditioning}}"><i class="material-icons" style="font-size:100%">ac_unit</i> Air Conditioning</li>
-        <li class="amenities amenities-{{place1.is_amenities_heating}}">Heating</li>
-        <li class="amenities amenities-{{place1.is_amenities_fireplace}}"><i class="fa fa-fire" aria-hidden="true"></i> Fireplace</li>
-        <li class="amenities amenities-{{place1.is_amenities_washer}}">Washer</li>
-        <li class="amenities amenities-{{place1.is_amenities_dryer}}">Dryer</li>
-        <li class="amenities amenities-{{place1.is_amenities_iron}}">Iron</li>
-        <li class="amenities amenities-{{place1.is_amenities_hair_dryer}}">Hair Dryer</li>
-        <li class="amenities amenities-{{place1.is_amenities_linen_essentials}}">Linens and Essentials</li>
-        <li class="amenities amenities-{{place1.is_amenities_hot_tub}}"><i class="material-icons" style="font-size:100%">hot_tub</i> Hot Tub</li>
-        <li class="amenities amenities-{{place1.is_amenities_pool}}"><i class="material-icons" style="font-size:100%">pool</i>Swimming Pool</li>
-        <li class="amenities amenities-{{place1.is_amenities_gym}}"><i class="material-icons" style="font-size:100%">fitness_center</i> Gym</li>
-        <li class="amenities amenities-{{place1.is_amenities_elevator}}">Elevator</li>
 
-        <hr>
-        <h5 class="bold amenities">Media Options</h5>
-        <li class="amenities amenities-{{place1.is_amenities_internet}}"><i class="fa fa-wifi" aria-hidden="true"></i> Internet</li>
-        <li class="amenities amenities-{{place1.is_familty_amenities_game_console}}">Game Console</li>
-        <li class="amenities amenities-{{place1.is_amenities_tv}}"><i class="fa fa-television" aria-hidden="true"></i> Television</li>
-        <li class="amenities amenities-{{place1.is_amenities_cable_tv}}">Cable Network</li>
-    </ul>
-</div>
-<hr>
-<div class="container">
-    <h4 class="underline bold">Pricing</h4>
-    <ul class="col-md-6">
-        <li class="amenities">Nightly Rate: <span class="bold">${{place1.price_night}}</span></li>
-        <li class="amenities">Cleaning Fee: <span class="bold">${{place1.price_cleaning}}</span></li>
-    </ul>
-    <ul class="col-md-6">
-        <li class="amenities">Cleaning Fee: <span class="bold">${{place1.price_servicefee}}</span></li>
-        <li class="amenities">Cleaning Fee: <span class="bold">${{place1.price_amenitites}}</span></li>
-    </ul>
-</div>
-</div>
-{% endblock %}
+<!-- EDIT FORM START -->
+
+<form action='{% url ' places:edit ' place.id %}' method='POST' enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>First Name:</p>
+    <input type="text" name="place_name" value="{{place.first_name}} ">
+    <br>
+    <br>
+    <p>Last Name:</p>
+    <input type="text" name="place_description" value=" {{place.description}} ">
+    <br>
+    <br>
+    <input type="file" name="myfile" blank="True">
+    <br>
+    <br>
+    <input type="submit" value="Change Profile">
+</form>
+
+<br>
+<br>

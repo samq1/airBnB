@@ -180,3 +180,7 @@ input::-webkit-input-placeholder {
 	padding-bottom: 60px;
 	position: fixed;
 }
+
+.well{
+	width: 240px;
+}
