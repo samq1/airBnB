@@ -1,10 +1,17 @@
 {% extends 'base/base.html' %}
 {% block content %}
-    <h1>Congratulations, {{user_name}}, you have reserved a crib!</h1>
+    <h1>{{user_name}}, here is the information about your crib reservation</h1>
     <a href="/booking/view/my_trips">Manage my crib trips</a>
     <hr>
     <p>Print this page for your records.</p>
     <hr>
+{% if booking.is_cancel %}
+<div class="panel panel-danger">
+    <h2 class="panel-body">This trip was cancelled.</h2>
+    <h4 class="panel-footer">The charges below were credited to your account.</h4>
+    <hr>
+</div>
+{% endif %}
 <div class="col-md-6">
     <h4>You are staying at <a href="/places/{{booking.place.id}}">{{booking.place.name}}</a></h4>
     <h4>{{booking.place.city}}, {{booking.place.state}} ({{booking.place.country}})</h4>

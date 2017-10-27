@@ -18,4 +18,7 @@ urlpatterns = [
     url(r'^uploads/simple/$', views.simple_upload, name='simple_upload'),
     url(r'^(?P<place_id>\d+)/uploading$', views.upload, name='upload_place'),
     url(r'^(?P<place_id>\d+)/upload_pic$', views.upload_page, name='upload_page'),
+    url(r'^host/my_cribs$', views.show_host_all_cribs,
+        name="show_host_cribs"),
+
 ]

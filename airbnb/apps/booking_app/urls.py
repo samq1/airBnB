@@ -10,8 +10,10 @@ urlpatterns = [
     url(r'^update$', views.booking_update, name="update"),
     url(r'^(?P<booking_id>\d+)/cancel$', views.booking_cancel_page, name="cancel"),
     url(r'^(?P<booking_id>\d+)/destroy$', views.booking_destroy, name="destroy"),
-    url(r'^view/(?P<user_id>\d+)/trips$',
+    url(r'^view/my_trips$',
         views.booking_view_user_trips, name="view_user_trips"),
-    url(r'^show_all$', views.booking_show_all_cribs, name="show_all_cribs"),
-    url(r'^show_guests$', views.booking_show_all_guests, name="show_all_guests"),
+    url(r'^(?P<booking_id>\d+)/show$',
+        views.booking_show_single_trip, name="view_single_trip"),
+    url(r'^view/host/(?P<place_id>\d+)/guests$',
+        views.show_host_place_all_guests, name="show_place_guests"),
 ]

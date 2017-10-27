@@ -2,45 +2,55 @@
 from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from datetime import datetime
+from datetime import datetime, date, timedelta
 from ..loginregis_app.models import *
 from django.contrib import messages
+from django.db.models import Count
 import ast
 import decimal
 from django.core.files.storage import FileSystemStorage
 
 
 def show_place(request, place_id):
-    # if "user_id" in request.session:
-    #     return redirect('/users/all')
-    # else:
-    #     return redirect('/users')
     try:
         place = Place.objects.get(id=place_id)
         picture = place.place_pictures.first()
     except:
         return redirect(reverse('places:does_not_exist'))
+    if picture:
+        picture_url = picture.image.url
+    else:
+        picture_url = "/static/images/7da91a39_original.jpg"
+
+    # exclude_dates that are currently booked for this place
+    exclude_dates = []
+    bookings_at_place = Booking.objects.filter(place=place)
+    for booking in bookings_at_place:
+        check_in = booking.check_in
+        check_out = booking.check_out
+        delta = check_out - check_in
+        for i in range(delta.days):
+            exclude_day = check_in + timedelta(days=i)
+            exclude_dates.append(exclude_day.strftime("%Y-%m-%d"))
     context = {
         "users": User.objects.all(),
         "place1": place,
-        "picture": picture.image.url,
+        "picture": picture_url,
         "today": datetime.today().strftime("%Y-%m-%d"),
+        "exclude_dates": exclude_dates,
     }
-    print place
-    print picture
-
     return render(request, "place/show_place.html", context)
 
 
 def edit_place(request, place_id):
-    # if "user_id" in request.session:
-    #     return redirect('/users/all')
-    # else:
-    #     return redirect('/users')
+    if 'user_id' not in request.session:
+        return redirect(reverse('login:main_login'))
     try:
         place = Place.objects.get(id=place_id)
     except:
         return redirect(reverse('places:does_not_exist'))
+    if not request.session['user_id'] == place.host.id:
+        return redirect(reverse('places:filter_order_only'))
     context = {
         "users": User.objects.all(),
         "place1": place
@@ -61,10 +71,6 @@ def get_place_filter(request):
 
 
 def filter_all(request, ordering=None, city=None, state=None):
-    # if "user_id" in request.session:
-    #     return redirect('/users/all')
-    # else:
-    #     return redirect('/users')
     places = Place.objects.all()
     if city:
         city = city.replace("_", " ")
@@ -90,18 +96,12 @@ def filter_all(request, ordering=None, city=None, state=None):
 
 
 def does_not_exist(request):
-    # if "user_id" in request.session:
-    #     return redirect('/users/all')
-    # else:
-    #     return redirect('/users')
     return render(request, "place/does_not_exist.html")
 
 
 def new_page(request):
-    if "user_id" in request.session:
-        return redirect('/users/all')
-    else:
-        return redirect('/users')
+    if 'user_id' not in request.session:
+        return redirect(reverse('login:main_login'))
     return render(request, "base/new.html")
 
 def become_host(request):
@@ -121,7 +121,6 @@ def adding_host(request):
         return redirect(reverse('login:main_login'))
 
     if request.method == 'POST':
-
         is_smoking_allowed = False
         is_amenities_free_parking = False
         is_family_amenities_baby_monitor = False
@@ -285,13 +284,17 @@ def adding_host(request):
 
         place_id = NewPlace.id
         messages.success(request, "You successfully created your crib!") 
+        if not 'user_is_host' in request.session:
+            request.session['user_is_host'] = 1
         return redirect(reverse('places:upload_page', kwargs={'place_id':place_id}))
 
     return render(request, "place/create_place.html", context)
 
 
 def upload_page(request, place_id):
-# UPLOAD PAGE ------------------------------------------
+    if 'user_id' not in request.session:
+        return redirect(reverse('login:main_login'))
+    # UPLOAD PAGE ------------------------------------------
     user = User.objects.get(id=request.session['user_id']),
 
     context = {
@@ -304,7 +307,9 @@ def upload_page(request, place_id):
     return render(request, 'place/upload_pic.html', context)
 
 def upload(request, place_id):
-# UPDATING PLACE PROFILE ------------------------------------------
+    if 'user_id' not in request.session:
+        return redirect(reverse('login:main_login'))
+    # UPDATING PLACE PROFILE ------------------------------------------
     # print User_id
     if request.method == 'POST':
         person = User.objects.get(id=request.session['user_id'])
@@ -323,7 +328,9 @@ def upload(request, place_id):
 
 
 def simple_upload(request):
-# UPLOAD PHOTOS ------------------------------------------
+    if 'user_id' not in request.session:
+        return redirect(reverse('login:main_login'))
+    # UPLOAD PHOTOS ------------------------------------------
     if request.method == 'POST' and request.FILES['myfile']:
         print 'YOURE UPLOADING!'
         myfile = request.FILES['myfile']
@@ -340,3 +347,18 @@ def simple_upload(request):
         # myfile = request.FILES['myfile']
         # person.image = myfile
     return render(request, 'loginregis_app/edit_profile.html')
+
+
+def show_host_all_cribs(request):
+    if 'user_id' not in request.session:
+        return redirect(reverse('login:main_login'))
+    current_user = User.objects.get(id=request.session['user_id'])
+    hosted_places = Place.objects.filter(host=current_user).annotate(num_bookings=Count('place_bookings'))
+    bookings = Booking.objects.all()
+    for booking in bookings:
+        print booking.id
+    context = {
+        'hosted_places': hosted_places,
+        'bookings': bookings,
+    }
+    return render(request, 'place/view_host_cribs.html', context)

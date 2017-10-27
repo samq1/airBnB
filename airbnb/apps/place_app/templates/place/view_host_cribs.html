@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+{% block content %}
+    <h1>{{request.session.user_first_name}}, here are the cribs you have listed</h1>
+    <hr>
+    {% load humanize %}
+<div class="col-md-11 panel panel-primary">
+    <table class="table table-hover">
+        <tr class="text-center">
+            <th scope="col">Crib</th>
+            <th scope="col">Location</th>
+            <th scope="col">Nightly Rate</th>
+            <th scope="col"># Bookings</th>
+            <th scope="col">Bookings</th>
+            <th scope="col">Date Listed</th>
+            <th scope="col">Remove</th>
+        </tr>
+        {% for place in hosted_places %}
+            <tr>
+                <th scope="row"><a href="/places/{{place.id}}">{{place.name}}</a></th>
+                <td>{{place.city}}, {{place.state}} ({{place.country}})</td>
+                <td>${{place.price_night|intcomma}}</td>
+                <td>{{booking.num_bookings}}</td>
+                <td class="text-center">{{booking.num_guests}}</td>
+                <td><a href="/login/profile/{{booking.place.host.id}}">{{booking.place.host.first_name}} {{booking.place.host.last_name}}</a></td>
+                <td><a href="/booking/{{booking.id}}/cancel">Cancel Crib Visit</a></td>
+            </tr>
+         {% if not booking.is_cancel %}
+        {% endif %}
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
