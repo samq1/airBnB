@@ -401,6 +401,7 @@ class Review_User(models.Model):
 class Booking(models.Model):
     place = models.ForeignKey(Place, related_name="place_bookings")
     guest = models.ForeignKey(User, related_name="guest_bookings")
+    listed_by = models.ManyToManyField(User, related_name="listed_vacations")
     is_cancel = models.BooleanField(default=False)
     check_in = models.DateField()
     check_out = models.DateField()

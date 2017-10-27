@@ -1,8 +1,103 @@
-{% extends 'base/base.html' %}
-{% block content %}
-<div class="post">
+{% extends 'base/base.html' %} {% block content %}
+{% load static %}
+     {% load static %}
+    <img id="best_pic" src={% static "/base/img/mycrib2.jpg" %} alt="" />
+
+<div class="row">
     
-    <h1>This is new content</h1>
-    <p>asdlfjk sadf;lakjsd f;aksjdf ;alskdjf a;sdjf ;alsdjfa;sdjf a;lskldjf;alsdjf iqwetpquwgpndfb ipqn</p>
+    <div class="col-lg-4 col-lg-4">
+        <form action="{% url 'places:filter_process' %}" method="POST">
+            {% csrf_token %}
+            <p>Filter by Location:</p>
+            <input type="hidden" value="city_state" name="filter_type">
+            <select name="filter" class="col-xs-9">
+                {% for location in locations %}
+                <option value="{'city':'{{location.city}}', 'state':'{{location.state}}'}">{{ location.city }}, {{ location.state }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Go" style="font-size:80%">
+        </form>
+    </div>
+    <div class="col-lg-4 col-lg-4">
+        <form action="{% url 'places:filter_process' %}" method="POST">
+            {% csrf_token %}
+            <p>Filter by State:</p>
+            <input type="hidden" value="state" name="filter_type">
+            <select name="filter" class="col-xs-9">
+                {% for state in states %}
+                <option value="{{ state.state }}">{{ state.state }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Go" style="font-size:80%">
+        </form>
+    </div>
+    <div class="col-md-2 col-xs-12">
+        <form action="/places/filter/ordering=price" method="POST">
+            {% csrf_token %}
+            <p style="color:white">.</p>
+            <input type="submit" value="Refresh All" style="font-size:80%">
+        </form>
+    </div>
+
+
 </div>
-{% endblock %}
+<br>
+
+<div id="jumbotron">
+    <h1>Feature Destination</h1>
+    <!-- <p>MyCrib connects people to unique travel experiences, at any price point, in more than 65,000 cities and 191 countries. And with world-class customer service and a growing community
+    of users, MyCrib is the easiest way for people to monetize their extra space and showcase it to an audience of millions.</p> -->
+    <p>
+    
+
+    <div class="container-outer">
+        <div class="container-inner">
+             {% load static %}
+                <a href="http://localhost:8000/places/38"><img id="banner_img" src={% static "/base/img/chicago.jpg" %} alt="#"></a>
+                <a href="http://localhost:8000/places/38"><img id="banner_img" src={% static "/base/img/69490049_original.jpg" %} alt="#"></a>
+                <a href="http://localhost:8000/places/38"><img id="banner_img" src={% static "/base/img/indiana.jpeg" %} alt="#"></a>
+                <a href="http://localhost:8000/places/38"><img id="banner_img" src={% static "/base/img/california.jpeg" %} alt="#"></a>
+                <a href="http://localhost:8000/places/42"><img id="banner_img" src={% static "/base/img/rivernorth.jpeg" %} alt="#"></a>
+                <a href="http://localhost:8000/places/39"><img id="banner_img" src={% static "/base/img/69490049_original.jpg" %} alt="#"></a>
+                <a href="http://localhost:8000/places/38"><img id="banner_img" src={% static "/base/img/texas.jpeg" %} alt="#"></a>
+                <a href="http://localhost:8000/places/41"><img id="banner_img" src={% static "/base/img/home1.jpg" %} alt="#"></a>
+                <a href="http://localhost:8000/places/40"><img id="banner_img" src={% static "/base/img/home2.jpg" %} alt="#"></a>
+                <a href="http://localhost:8000/places/38"><img id="banner_img" src={% static "/base/img/home3.jpg" %} alt="#"></a>
+                <a href="http://localhost:8000/places/38"><img id="banner_img" src={% static "/base/img/home4.jpg" %} alt="#"></a>
+                <a href="http://localhost:8000/places/38"><img id="banner_img" src={% static "/base/img/home5.jpg" %} alt="#"></a>
+        </div>
+    </div>
+    <!-- <a class="btn btn-primary btn-lg">Learn more</a> -->
+    </p>
+</div>
+<!-- {% load static %}
+<div class="col-lg-9">
+    <div id='front_look'>
+        <div class="container-outer">
+            <div class="container-inner">
+                <img id="banner_img" src={% static "/base/img/69490049_original.jpg" %} alt="#">
+                <img id="banner_img" src={% static "/base/img/69490049_original.jpg" %} alt="#">
+                <img id="banner_img" src={% static "/base/img/69490049_original.jpg" %} alt="#">
+                <img id="banner_img" src={% static "/base/img/69490049_original.jpg" %} alt="#">
+                <img id="banner_img" src={% static "/base/img/69490049_original.jpg" %} alt="#">
+                <img id="banner_img" src={% static "/base/img/69490049_original.jpg" %} alt="#">
+                <img id="banner_img" src={% static "/base/img/69490049_original.jpg" %} alt="#">
+                <img id="banner_img" src={% static "/base/img/69490049_original.jpg" %} alt="#">
+                <img id="banner_img" src={% static "/base/img/69490049_original.jpg" %} alt="#">
+                <img id="banner_img" src={% static "/base/img/69490049_original.jpg" %} alt="#">
+                <img id="banner_img" src={% static "/base/img/69490049_original.jpg" %} alt="#">
+                <img id="banner_img" src={% static "/base/img/69490049_original.jpg" %} alt="#">
+        
+            </div>
+        </div>
+    </div>
+</div> -->
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+ {% endblock %}

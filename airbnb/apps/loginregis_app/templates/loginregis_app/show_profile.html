@@ -4,9 +4,11 @@
 <h1>Hey, I'm {{ User.first_name }}!</h1>
 <h3>Username: {{User.username}}</h3>
 
+
 <!-- {{User.image}} -->
 
 <div class="profile_column">
+
     <!-- image here -->
     {% if User.image %}
     <img src="{{ User.image.url }}" alt="Profile Image" width="200" height="200"> {% else %}

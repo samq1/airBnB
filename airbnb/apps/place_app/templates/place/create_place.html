@@ -1,10 +1,13 @@
 {% extends 'base/base.html' %} {% block content %}
 <h1>Hey, {{ user.first_name }}! Let’s get started listing your crib.</h1>
 
-<!-- {% load static %} -->
-<!-- <img src="{% static "images/airbnb.gif" %}" alt="My image" /> -->
+{% load static %}
+<img id="create_host_img" src="{% static "images/airbnb.gif" %}" alt="" />
 
 <div class="container-fluid">
+     {% load static %}
+    <img src="{% static " images/airbnb.gif " %}" alt="" />
+
     <div class="col-xs-12 text-right">
         <form action="/places/filter/ordering=price" method="POST">
             {% csrf_token %}
