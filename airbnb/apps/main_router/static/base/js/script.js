@@ -52,3 +52,13 @@ $(document).ready(function () {
     });
 
 });
+
+$(document).ready(function () {
+    var container_width = SINGLE_IMAGE_WIDTH * $(".container-inner a").length;
+    $(".container-inner").css("width", container_width);
+});
+
+$('#myCarousel').carousel({
+    interval: 4000
+});
+

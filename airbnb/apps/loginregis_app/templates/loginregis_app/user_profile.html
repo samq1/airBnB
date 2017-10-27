@@ -16,6 +16,7 @@
 <!-- {{user.image}} -->
 
 <div class="profile_column">
+
 <!-- image here -->
 {% if user.image %}
 <img src="{{ user.image.url }}" alt="Profile Image" width="200" height="200">
@@ -40,6 +41,16 @@
 <br>
 <!-- TRAVELING WISHLIST -->
 <h3>Travel Goals</h3>
+<div class="row">
+    {% for Booking in my_travels %}
+    <p class="col-md-2">
+        <a href='{% url 'places:show' Booking.place.id %}'>{{ Booking.place.name }} </a> <br> <a href='{% url 'reviews:review_places' Booking.place.id %}'>Review Their Place</a>
+        <!-- <img src="/media/{{ Booking.place.image.image.url }}" alt="Profile Image" width="50"
+            height="50"> -->
+    </p>
+
+    {% endfor %}
+</div>
 <br>
 <br>
 <!-- REVIEWS HERE -->

@@ -87,9 +87,10 @@ def create_booking(request, place_id):
         price_cleaning = price_cleaning,
         price_servicefee = price_servicefee,
         price_tax = charge_tax,
-        price_amenitites = price_amenitites
+        price_amenitites = price_amenitites,
     )
     booking_id = new_booking.id
+
     return redirect(reverse('bookings:success', kwargs={'booking_id': booking_id}))
 
 
@@ -97,6 +98,13 @@ def booking_success(request, booking_id):
     user_name = User.objects.get(id=request.session['user_id']).first_name
     booking = Booking.objects.get(id=booking_id)
     charge_total = booking.price_night + booking.price_cleaning + booking.price_servicefee + booking.price_amenitites + booking.price_tax
+    guest = User.objects.get(id=request.session['user_id'])
+
+    booking.listed_by.add(guest)
+    guest.listed_vacations.add(booking_id)
+    booking.save()
+    guest.save()
+
     context = {
         'user_name': user_name,
         'booking': booking,

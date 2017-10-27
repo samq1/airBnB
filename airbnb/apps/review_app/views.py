@@ -20,12 +20,15 @@ def review_users(request, User_id):
 
     return render(request, 'review/review_users.html', context)
 
-def review_places(request):
-# MAIN REVIEW PLACE ---------------------------------------
+def review_places(request, Place_id):
+# MAIN REVIEW PLACE PAGE ---------------------------------------
     print ('YOURE AT THE REVIEW PAGE!')
+    print Place_id
+    Place_id = Place_id
     context = {
     'Cleanliness': Cleanliness.choices,
-    'Rating': Rating.choices
+    'Rating': Rating.choices,
+    'Place_id': Place_id,
     }
 
     return render(request, 'review/review_places.html', context)
@@ -58,13 +61,19 @@ def process_placereview(request, Place_id):
         return redirect(reverse('login:main_login'))
 
     if request.method == 'POST':
+        is_location_accuracy = False
+        is_recommend = False
+
+        if 'is_location_accuracy' in request.POST:
+            is_location_accuracy = True
+        if 'is_recommend' in request.POST:
+            is_recommend = True
+        
         customer = User.objects.get(id=request.session['user_id'])
         place_staying = Place.objects.get(id=Place_id)
         comment_place = request.POST['comment_place']
-        is_location_accuracy = request.POST['is_location_accuracy']
-        is_recommend = request.POST['is_recommend']
         
-        Review_User.objects.create(comment_place=comment_place, is_location_accuracy=is_location_accuracy, is_recommend=is_recommend, reviewer=host, user_being_reviewed=customer)
+        Review_Place.objects.create(comment_place=comment_place, is_location_accuracy=is_location_accuracy, is_recommend=is_recommend, reviewer=customer, place=place_staying)
 
         messages.success(request, "You successfully reviewed!") 
         return redirect(reverse('login:user_profile'))

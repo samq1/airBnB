@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %} {% block content %}
 
-<form class="form-horizontal" action='{% url 'reviews:process_placereview' Place.id %}' method='POST'>
+<form class="form-horizontal" action='{% url 'reviews:process_placereview' Place_id %}' method='POST'>
+   {% csrf_token %}
   <fieldset>
     <legend>Review Places</legend>
       <!-- COMMENT -->

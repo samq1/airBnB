@@ -47,11 +47,15 @@ def user_profile(request):
     print user.state
     other_users = User.objects.exclude(id=request.session['user_id'])
     users_around_you = User.objects.filter(state=user.state).exclude(id=request.session['user_id'])
+    my_travels = user.listed_vacations.all()
+    place = Place.objects.all()
 
     context = {
         'user': User.objects.get(id=request.session['user_id']),
         'other_users': other_users,
         'users_around_you': users_around_you,
+        'my_travels': my_travels,
+        'place': place
 
     }
 

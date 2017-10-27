@@ -13,6 +13,9 @@
 	height: 75px;
 	border-radius: 100px;
 }
+#banner_img {
+	height: 200px
+}
 #booking_form {
 	margin: 20px auto;
 	margin-left: 25px;
@@ -62,6 +65,9 @@
 	text-decoration: line-through;
 }
 
+.jumbotron{
+	background-color: white;
+}
 
 
 
@@ -138,4 +144,39 @@ input::-webkit-input-placeholder {
 .login-register{
 	font-size: 11px;
 	text-align: center;
+}
+
+.container-outer { overflow: scroll; width: 950px; height: 210px; }
+.container-inner { width: 10000px; }
+
+#front_look{
+	margin-right: 0px;
+}
+
+
+.selected img {
+	opacity:0.5;
+}
+
+.carousel-control {
+    padding-top:200px;
+}
+
+#create_host_img{
+	width: 200px;
+	float: left;
+	padding-top: 280px;
+	margin-left: -60px;
+	margin-bottom: -2000px;
+
+}
+
+#best_pic{
+	width: 200px;
+	float: right;
+	right: 50px;
+	bottom: 300px;
+	margin-bottom: -60px;
+	padding-bottom: 60px;
+	position: fixed;
 }

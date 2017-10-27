@@ -3,6 +3,6 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
-    url(r'^new', views.new_page),
-    url(r'^', views.route_handler),
+    url(r'^', views.new_page),
+    url(r'^new', views.route_handler),
 ]
