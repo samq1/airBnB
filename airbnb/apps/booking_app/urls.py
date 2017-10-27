@@ -14,8 +14,6 @@ urlpatterns = [
         views.booking_view_user_trips, name="view_user_trips"),
     url(r'^(?P<booking_id>\d+)/show$',
         views.booking_show_single_trip, name="view_single_trip"),
-    url(r'^view/host/my_cribs$', views.show_host_all_cribs,
-        name="show_host_cribs"),
     url(r'^view/host/(?P<place_id>\d+)/guests$',
         views.show_host_place_all_guests, name="show_place_guests"),
 ]

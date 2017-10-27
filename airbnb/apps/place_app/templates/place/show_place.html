@@ -130,15 +130,16 @@
             </ul>
         </div>
         <hr>
+        {% load humanize %}
         <div class="container">
             <h4 class="underline bold">Pricing</h4>
             <ul class="col-md-6">
-                <li class="amenities">Nightly Rate: <span class="bold">${{place1.price_night}}</span></li>
-                <li class="amenities">Cleaning Fee: <span class="bold">${{place1.price_cleaning}}</span></li>
+                <li class="amenities">Nightly Rate: <span class="bold">${{place1.price_night|intcomma}}</span></li>
+                <li class="amenities">Cleaning Fee: <span class="bold">${{place1.price_cleaning|intcomma}}</span></li>
             </ul>
             <ul class="col-md-6">
-                <li class="amenities">Service Fee: <span class="bold">${{place1.price_servicefee}}</span></li>
-                <li class="amenities">Amenities Fee: <span class="bold">${{place1.price_amenitites}}</span></li>
+                <li class="amenities">Service Fee: <span class="bold">${{place1.price_servicefee|intcomma}}</span></li>
+                <li class="amenities">Amenities Fee: <span class="bold">${{place1.price_amenitites|intcomma}}</span></li>
             </ul>
         </div>
     </div>

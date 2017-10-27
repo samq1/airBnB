@@ -5,6 +5,7 @@ from django.urls import reverse
 from datetime import datetime, date, timedelta
 from ..loginregis_app.models import *
 from django.contrib import messages
+from django.db.models import Count
 import ast
 import decimal
 from django.core.files.storage import FileSystemStorage
@@ -346,3 +347,18 @@ def simple_upload(request):
         # myfile = request.FILES['myfile']
         # person.image = myfile
     return render(request, 'loginregis_app/edit_profile.html')
+
+
+def show_host_all_cribs(request):
+    if 'user_id' not in request.session:
+        return redirect(reverse('login:main_login'))
+    current_user = User.objects.get(id=request.session['user_id'])
+    hosted_places = Place.objects.filter(host=current_user).annotate(num_bookings=Count('place_bookings'))
+    bookings = Booking.objects.all()
+    for booking in bookings:
+        print booking.id
+    context = {
+        'hosted_places': hosted_places,
+        'bookings': bookings,
+    }
+    return render(request, 'place/view_host_cribs.html', context)

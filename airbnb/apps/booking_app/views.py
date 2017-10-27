@@ -181,9 +181,5 @@ def booking_show_single_trip(request, booking_id):
     return render(request, 'booking/view_booking.html', context)
 
 
-def show_host_all_cribs(request):
-    return render(request, 'booking/success.html')
-
-
 def show_host_place_all_guests(request):
     return render(request, 'booking/success.html')
