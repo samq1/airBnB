@@ -52,8 +52,6 @@ def confirm_pay(request, place_id):
 
 
 def create_booking(request, place_id):
-    # set place, guest, check_in, check_out, num_guests
-    # set date_paid, price_night, price_cleaning, price_servicefee, price_tax, price_amenitites
     try:
         place = Place.objects.get(id=place_id)
     except:
@@ -114,17 +112,51 @@ def booking_update(request):
 
 
 def booking_cancel_page(request, booking_id):
-    return render(request, 'booking/success.html')
+    try:
+        booking = Booking.objects.get(id=booking_id)
+    except:
+        return redirect(reverse('booking:view_user_trips'))
+
+    check_in = booking.check_in
+    check_out = booking.check_out
+
+    price_night = booking.price_night
+    num_nights = (check_out - check_in)
+    num_nights = num_nights.days
+    int_nights = int(num_nights)
+    charge_nights = (decimal.Decimal(
+        int_nights) * decimal.Decimal(price_night)).quantize(decimal.Decimal('.01'))
+    price_cleaning = booking.price_cleaning
+    price_servicefee = booking.price_servicefee
+    price_amenitites = booking.price_amenitites
+    charge_subtotal = charge_nights + price_cleaning + price_servicefee + price_amenitites
+    tax_percent = 0.08
+    charge_tax = (decimal.Decimal(charge_subtotal) * decimal.Decimal(tax_percent)).quantize(decimal.Decimal('.01'))
+    charge_total = charge_subtotal + charge_tax
+
+    context = {
+        'booking': booking,
+        'num_nights': num_nights,
+        'charge_nights': charge_nights,
+        'charge_subtotal': charge_subtotal,
+        'charge_tax': charge_tax,
+        'charge_total': charge_total,
+    }
+    return render(request, 'booking/confirm_cancel.html', context)
 
 
 def booking_destroy(request, booking_id):
-    return render(request, 'booking/success.html')
+    cancel_booking = Booking.objects.get(id=booking_id)
+    cancel_booking.is_cancel = True
+    cancel_booking.save()
+    return redirect('/booking/view/my_trips')
 
 
-def booking_view_user_trips(request, user_id):
+def booking_view_user_trips(request):
     user_name = User.objects.get(id=request.session['user_id']).first_name
     today = datetime.now()
-    user_bookings = Booking.objects.filter(guest=request.session['user_id'])
+    user_bookings = Booking.objects.filter(
+        guest=request.session['user_id']).order_by('check_in')
     context = {
         'user_name': user_name,
         'user_bookings': user_bookings,
@@ -133,9 +165,25 @@ def booking_view_user_trips(request, user_id):
     return render(request, 'booking/view_user_trips.html', context)
 
 
-def booking_show_all_cribs(request):
+def booking_show_single_trip(request, booking_id):
+    try:
+        booking = Booking.objects.get(id=booking_id)
+    except:
+        return redirect(reverse('booking:view_user_trips'))
+    user_name = User.objects.get(id=request.session['user_id']).first_name
+    charge_total = booking.price_night + booking.price_cleaning + \
+        booking.price_servicefee + booking.price_amenitites + booking.price_tax
+    context = {
+        'user_name': user_name,
+        'booking': booking,
+        'charge_total': charge_total,
+    }
+    return render(request, 'booking/view_booking.html', context)
+
+
+def show_host_all_cribs(request):
     return render(request, 'booking/success.html')
 
 
-def booking_show_all_guests(request):
+def show_host_place_all_guests(request):
     return render(request, 'booking/success.html')

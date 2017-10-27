@@ -2,10 +2,11 @@
 {% block content %}
     <h1>{{user_name}}, here are your trips!</h1>
     <hr>
-<div class="col-md-10 panel panel-default">
+<div class="col-md-11 panel panel-primary">
     <h4 class="bold underline">Your upcoming crib visits</h4>
     <table class="table table-hover">
         <tr class="text-center">
+            <th scope="col"></th>
             <th scope="col">Crib</th>
             <th scope="col">Location</th>
             <th scope="col">Check In</th>
@@ -15,26 +16,29 @@
             <th scope="col">Cancel</th>
         </tr>
         {% for booking in user_bookings %}
+        {% if not booking.is_cancel %}
             {% if today|date:"Y-m-d" < booking.check_in|date:"Y-m-d"  %}    
             <tr>
-                <th scope="row">{{booking.place.name}}</th>
+                <th scope="row"><a href="/booking/{{booking.id}}/show">View</a></th>
+                <th scope="row"><a href="/places/{{booking.place.id}}">{{booking.place.name}}</a></th>
                 <td>{{booking.place.city}}, {{booking.place.state}} ({{booking.place.country}})</td>
                 <td>{{booking.check_in}}</td>
                 <td>{{booking.check_out}}</td>
                 <td class="text-center">{{booking.num_guests}}</td>
-                <td>{{booking.place.host.first_name}} {{booking.place.host.last_name}}</td>
+                <td><a href="/login/profile/{{booking.place.host.id}}">{{booking.place.host.first_name}} {{booking.place.host.last_name}}</a></td>
                 <td><a href="/booking/{{booking.id}}/cancel">Cancel Crib Visit</a></td>
             </tr>
             {% endif %}
+        {% endif %}
         {% endfor %}
     </table>
 </div>
-<hr>
-<hr>
-<div class="col-md-10 well">
+<div style="clear:both" class="row"></div>
+<div class="col-md-11 well">
     <h4 class="bold underline">Cribs you have already visited</h4>
     <table class="table table-hover">
         <tr class="text-center">
+            <th scope="col"></th>
             <th scope="col">Crib</th>
             <th scope="col">Location</th>
             <th scope="col">Check In</th>
@@ -44,17 +48,48 @@
             <th scope="col">Review</th>
         </tr>
         {% for booking in user_bookings %} 
+        {% if not booking.is_cancel %}
             {% if today|date:"Y-m-d" > booking.check_in|date:"Y-m-d" %} 
             <tr>
-                <th scope="row">{{booking.place.name}}</th>
+                <th scope="row"><a href="/booking/{{booking.id}}/show">View</a></th>
+                <th scope="row"><a href="/places/{{booking.place.id}}">{{booking.place.name}}</a></th>
                 <td>{{booking.place.city}}, {{booking.place.state}} ({{booking.place.country}})</td>
                 <td>{{booking.check_in}}</td>
                 <td>{{booking.check_out}}</td>
                 <td class="text-center">{{booking.num_guests}}</td>
-                <td>{{booking.place.host.first_name}} {{booking.place.host.last_name}}</td>
+                <td><a href="/login/profile/{{booking.place.host.id}}">{{booking.place.host.first_name}} {{booking.place.host.last_name}}</a></td>
                 <td><a href="/review/review_place/{{booking.place.id}}">Review this Crib</a></td>
             </tr>
             {% endif %}
+        {% endif %}
+        {% endfor %}
+    </table>
+</div>
+<div style="clear:both" class="row"></div>
+<div class="col-md-10 well">
+    <h4 class="bold underline">Cribs you have cancelled</h4>
+    <table class="table table-hover">
+        <tr class="text-center">
+            <th scope="col"></th>
+            <th scope="col">Crib</th>
+            <th scope="col">Location</th>
+            <th scope="col">Check In</th>
+            <th scope="col">Check Out</th>
+            <th scope="col">Guests</th>
+            <th scope="col">Host</th>
+        </tr>
+        {% for booking in user_bookings %} 
+        {% if booking.is_cancel %}
+        <tr>
+            <th scope="row"><a href="/booking/{{booking.id}}/show">View</a></th>
+            <th scope="row"><a href="/places/{{booking.place.id}}">{{booking.place.name}}</a></th>
+            <td>{{booking.place.city}}, {{booking.place.state}} ({{booking.place.country}})</td>
+            <td>{{booking.check_in}}</td>
+            <td>{{booking.check_out}}</td>
+            <td class="text-center">{{booking.num_guests}}</td>
+            <td><a href="/login/profile/{{booking.place.host.id}}">{{booking.place.host.first_name}} {{booking.place.host.last_name}}</a></td>
+        </tr>
+        {% endif %}
         {% endfor %}
     </table>
 </div>

@@ -1,25 +1,4 @@
-$(function () {
-    $(".datepicker").datepicker({
-        dateFormat: "mm/dd/yy",
-        showButtonPanel: true,
-        showAnim: "slide",
-    });
-    var today = new Date();
-    var new_date = new Date();
-    new_date.setDate(today.getDate() + 1);
-    $(".datepicker.check_in").datepicker("setDate", new Date());
-    $(".datepicker.check_in").datepicker("option", "onSelect", function(dateText) {
-        curr_date = $(".datepicker.check_in").datepicker("getDate");
-        console.log(curr_date);
-        var new_date = curr_date;
-        new_date.setDate(curr_date.getDate() + 1);
-        console.log(new_date);
-        $(".datepicker.check_out").datepicker("setDate", new_date);
-        $(".datepicker.check_out").datepicker("option", "minDate", new_date);
-    });
-    $(".datepicker.check_out").datepicker("setDate", new_date);
-    $(".datepicker.check_out").datepicker("option", "minDate", new_date);
-});
+
 
 $(document).ready(function () {
     var action;

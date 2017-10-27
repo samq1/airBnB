@@ -1,0 +1,91 @@
+{% extends 'base/base.html' %} {% block content %}
+<h1>You are about to CANCEL your crib reservation!</h1>
+<h2 class="bold">Are you sure you would like to continue?</h2>
+<div class="col-md-3 col-md-offset-2 well text-center">
+    <a href="/booking/view/my_trips">Cancel</a>
+</div>
+<div class="col-md-3 col-md-offset-2 well text-center bold">
+    <a href="/booking/{{booking.id}}/destroy">Yes, please cancel this reservation.</a>
+</div>
+<div style="clear:both"></div>
+<div class="row">
+    <hr>
+</div>
+<div style="clear:both"></div>
+<div class="row well">
+    <div class="container-fluid col-md-6">
+        <h3>Crib: {{booking.place.name}}</h3>
+        <h4>{{booking.place.city}}, {{booking.place.state}}, {{booking.place.country}}</h4>
+        <h4>Host: {{booking.place.host.first_name}} {{booking.place.host.last_name}}</h4>
+        <hr>
+        <h4>Checking in on: <span class="bold">{{booking.check_in|date:"D d M Y"}}</span>, <span class="italic smaller">after {{booking.place.check_in_time}}</span></h4>
+        <h4>Checking out on: <span class="bold">{{booking.check_out|date:"D d M Y"}}</span>, <span class="italic smaller">before {{booking.place.check_out_time}}</span></h4>
+        <h4>Number of guests: {{booking.num_guests}}</h4>
+        <hr>
+    </div>
+    <div class="container col-md-6">
+        <div class="container col-md-11">
+            <h4 class="underline">House Rules:</h4>
+            <p>{{booking.place.house_rules}}</p>
+            <hr>
+            <h4 class="underline">Cancellation Policy:</h4>
+            <p>{{booking.place.cancellation_policy}}</p>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row well">
+    <div class="container-fluid col-md-6">
+        <h4 class="bold underline">Pricing:</h4>
+        <div class="col-md-7 col-md-offset-1">
+            {% load humanize %}
+            <table class="table table-hover text-right">
+                <tr>
+                    <td>Price per Night</td>
+                    <td>${{booking.place.price_night|intcomma}}</td>
+                </tr>
+                <tr class="bg-info">
+                    <td>Number of Nights</td>
+                    <td class="text-center">{{num_nights}}</td>
+                </tr>
+                <tr class="bg-info">
+                    <td>Price for all Nights</td>
+                    <td>${{charge_nights|intcomma}}</td>
+                </tr>
+                <tr>
+                    <td>Cleaning</td>
+                    <td>${{booking.place.price_cleaning|intcomma}}</td>
+                </tr>
+                <tr>
+                    <td>Service Fee</td>
+                    <td>${{booking.place.price_servicefee|intcomma}}</td>
+                </tr>
+                <tr>
+                    <td>Amenities</td>
+                    <td>${{booking.place.price_amenitites|intcomma}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="container col-md-6">
+        <div class="col-md-7">
+            {% load humanize %}
+            <table class="table table-hover text-right">
+                <tr class="bg-info">
+                    <td class="italic">Subtotal</td>
+                    <td class="bold">${{charge_subtotal|intcomma}}</td>
+                </tr>
+                <tr class="bg-info">
+                    <td class="italic">Tax</td>
+                    <td class="bold">${{charge_tax|intcomma}}</td>
+                </tr>
+                <tr class="bg-primary">
+                    <td class="italic white">Total Charge</td>
+                    <td class="bold white larger">${{charge_total|intcomma}}</td>
+                </tr>
+            <hr>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

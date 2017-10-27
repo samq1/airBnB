@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from django.contrib import messages
 from django.shortcuts import render, HttpResponse, redirect
 from models import *
+from django.db.models import Count
 from django.contrib import messages
 from datetime import date
 from django.conf import settings
@@ -15,6 +16,16 @@ def main_login(request):
     print ('YOURE AT THE LOGIN PAGE!')
 
     return render(request, 'loginregis_app/main_login.html')
+
+
+def main_logout(request):
+    del request.session['user_id']
+    del request.session['username']
+    del request.session['user_first_name']
+    del request.session['user_last_name']
+    if 'user_is_host' in request.session:
+        del request.session['user_is_host']
+    return redirect(reverse('login:main_login'))
 
 
 
@@ -74,8 +85,17 @@ def process(request):
         if len(result) > 0:
             messages.error(request, result)
             return redirect(reverse('login:main_login'))
+    
+    # check if the logged in user is also a host
+    hosted_places = Place.objects.filter(host = result)
+    num_hosted_places = hosted_places.count()
 
     request.session['user_id'] = result.id
+    request.session['username'] = result.username
+    request.session['user_first_name'] = result.first_name
+    request.session['user_last_name'] = result.last_name
+    if num_hosted_places > 0:
+        request.session['user_is_host'] = num_hosted_places
     messages.success(request, "You successfully logged in!") 
     return redirect(reverse('login:user_profile'))
 

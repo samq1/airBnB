@@ -4,6 +4,7 @@ from . import views #'.' means the same folder
 
 urlpatterns = [
     url(r'^$', views.main_login, name="main_login"),
+    url(r'^logout$', views.main_logout, name="main_logout"),
     url(r'^register/$', views.register, name="register"),
     url(r'^profile/$', views.user_profile, name="user_profile"),
     url(r'^profile/(?P<User_id>\d+)$', views.show, name="show"),
