@@ -15,3 +15,10 @@ pip install bcrypt
 - Javascript
 - jQuery
 
+![alt text](Cribs_4.png)
+
+![alt text](Cribs_3.png)
+
+![alt text](Cribs_5.png)
+
+![alt text](Cribs_7.png)
