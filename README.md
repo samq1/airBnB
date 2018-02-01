@@ -7,7 +7,6 @@ Made an online hospitality service, for people to lease or rent short-term lodgi
 ## Dependencies
 ``` 
 pip install bcrypt
-
 ```
 ## Technology
 - Database: Sqlite
