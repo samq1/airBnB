@@ -31,7 +31,8 @@ def new_page(request, ordering=None, city=None, state=None):
         places = places.order_by('price_night')
 
     context = {
-        "places": places,
+        "placestoo": Place.objects.filter(state="Texas"),
+        "places": places.filter(state="Florida"),
         "locations": Place.objects.order_by(
             'city').values('city', 'state').distinct(),
         "states": Place.objects.order_by('state').values('state').distinct(),

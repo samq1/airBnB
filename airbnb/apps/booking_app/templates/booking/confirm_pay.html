@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %} {% block content %}
 <h1>You are about to reserve a crib!</h1>
 <hr>
-<div class="container-fluid well">
+<div class="container-fluid">
     <div class="col-md-6">
         <h3>Crib: {{place1.name}}</h3>
         <h4>{{place1.city}}, {{place1.state}}, {{place1.country}}</h4>
@@ -21,7 +21,7 @@
     </div>
 </div>
 <hr>
-<div class="container-fluid well">
+<div class="container-fluid">
     <div class="col-md-6">
         <h4 class="bold underline">Pricing:</h4>
         {% load humanize %}

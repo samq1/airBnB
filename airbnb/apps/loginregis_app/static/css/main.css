@@ -12,7 +12,9 @@ body, html{
  	background-color: #d3d3d3;
  	font-family: 'Oxygen', sans-serif;
 }
-
+h2{
+	margin-left: 0px;
+}
 .main{
  	margin-top: 70px;
 }

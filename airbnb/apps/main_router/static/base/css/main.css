@@ -1,6 +1,14 @@
 .show-on-hover:hover > ul.dropdown-menu {
     display: block;    
 }
+.nameof{
+	padding-left: 0px;
+	margin-left: 0px;
+}
+#place_featured{
+	width: 5px;
+	height: 5px;
+}
 .logo {
     height: 80%;
 }
@@ -67,6 +75,7 @@
 
 .jumbotron{
 	background-color: white;
+	/* height: 400px; */
 }
 
 
@@ -146,8 +155,12 @@ input::-webkit-input-placeholder {
 	text-align: center;
 }
 
-.container-outer { overflow-y: hidden; overflow-x: scroll; height: 220px; }
-.container-inner { width: 10000px; }
+.container-outer { 
+	overflow-y: hidden; 
+	overflow-x: scroll; 
+	max-width: 1000px; 
+	height: 220px; 
+}
 
 #front_look{
 	margin-right: 0px;
@@ -171,14 +184,14 @@ input::-webkit-input-placeholder {
 
 }
 
-#best_pic{
+.best_pic{
 	width: 200px;
 	float: right;
 	right: 50px;
 	bottom: 300px;
 	margin-bottom: -60px;
 	padding-bottom: 60px;
-	position: fixed;
+	position: absolute;
 }
 
 .well{

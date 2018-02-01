@@ -55,7 +55,7 @@
 <br>
 <br>
 <!-- REVIEWS HERE -->
-<h3>Other people around your travel schedule!</h3>
+<h3>Other people around your travel schedule!</h3><br>
 <div class="row">
     {% for User in users_around_you %}
     <p class="col-md-2" ><a href='{% url 'login:show' User.id %}'>{{ User.first_name }} {{ User.last_name }}</a> <img src="/media/{{ User.image }}" alt="Profile Image" width="50" height="50"></p>

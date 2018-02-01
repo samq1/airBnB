@@ -126,13 +126,13 @@ def show(request, User_id):
     that_user = User.objects.get(id=User_id)
     other_users = User.objects.exclude(id=User_id)
     users_around_them = User.objects.filter(state=that_user.state).exclude(id=User_id)
-    my_travels = Booking.objects.filter(guest=User).values('place__id', 'place__name', 'place__city').distinct()
+    my_travels = Booking.objects.filter(guest=that_user).values('place__id', 'place__name', 'place__city').distinct()
 
     context = {
         'User': User.objects.get(id=User_id),
         'other_users': other_users,
         'users_around_them': users_around_them,
-        'my_travels': my_travel
+        'my_travels': my_travels
     }
 
     return render(request,'loginregis_app/show_profile.html', context)
